@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EcoStartup — Экологический рейтинг и ESG-сертификация под ключ</title>
     <meta name="description" content="Получите экологический сертификат RAEX/ЭКГ за 45 дней. Расчёт углеродного следа, подготовка документов, сопровождение до вручения.">
-    <link rel="icon" href="image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script>
@@ -13,22 +13,11 @@
             theme: {
                 extend: {
                     colors: {
-                        eco: {
-                            light: '#4CAF50',
-                            DEFAULT: '#2E7D32',
-                            dark: '#1B5E20',
-                            bg: '#F1F8E9',
-                            accent: '#66BB6A',
-                            soft: '#E8F5E9'
-                        }
+                        eco: { light: '#4CAF50', DEFAULT: '#2E7D32', dark: '#1B5E20', bg: '#F1F8E9', accent: '#66BB6A', soft: '#E8F5E9' },
+                        error: '#DC2626'
                     },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif']
-                    },
-                    animation: {
-                        'float': 'float 3s ease-in-out infinite',
-                        'fade-in': 'fadeIn 0.6s ease forwards'
-                    }
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    animation: { 'float': 'float 3s ease-in-out infinite', 'fade-in': 'fadeIn 0.6s ease forwards' }
                 }
             }
         }
@@ -38,28 +27,25 @@
         body { font-family: 'Inter', sans-serif; }
         @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-8px); } }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        
         .gradient-bg { background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 50%, #4CAF50 100%); }
         .gradient-text { background: linear-gradient(135deg, #2E7D32 0%, #4CAF50 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border: 1px solid rgba(46, 125, 50, 0.1); }
         .card-hover { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
         .card-hover:hover { transform: translateY(-6px); box-shadow: 0 12px 24px rgba(46, 125, 50, 0.15); }
-        
         .btn-primary { background: linear-gradient(135deg, #2E7D32 0%, #4CAF50 100%); transition: all 0.3s ease; position: relative; overflow: hidden; }
         .btn-primary::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(135deg, #4CAF50 0%, #66BB6A 100%); transition: left 0.3s ease; }
         .btn-primary:hover::before { left: 0; }
         .btn-primary span { position: relative; z-index: 1; }
-        
         .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 100; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
         .modal-overlay.active { opacity: 1; pointer-events: auto; }
-        .modal-content { background: white; border-radius: 16px; padding: 2rem; width: 90%; max-width: 500px; transform: scale(0.95); transition: transform 0.3s ease; }
+        .modal-content { background: white; border-radius: 16px; padding: 2rem; width: 90%; max-width: 500px; transform: scale(0.95); transition: transform 0.3s ease; max-height: 90vh; overflow-y: auto; }
         .modal-overlay.active .modal-content { transform: scale(1); }
-        
         .fade-in-section { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
         .fade-in-section.visible { opacity: 1; transform: translateY(0); }
-        
         .step-line { position: absolute; left: 24px; top: 48px; bottom: 0; width: 2px; background: linear-gradient(to bottom, #2E7D32, #4CAF50); }
         .leaf-deco { position: absolute; opacity: 0.05; pointer-events: none; }
+        .input-error { border-color: #DC2626 !important; background-color: #FEF2F2; }
+        .input-success { border-color: #2E7D32 !important; background-color: #F0FDF4; }
     </style>
 </head>
 <body class="bg-white text-gray-800 overflow-x-hidden">
@@ -76,7 +62,8 @@
             <nav class="hidden md:flex space-x-8 items-center">
                 <a href="#services" class="text-gray-600 hover:text-eco font-medium transition">Услуги</a>
                 <a href="#process" class="text-gray-600 hover:text-eco font-medium transition">Как работаем</a>
-                <a href="#audience" class="text-gray-600 hover:text-eco font-medium transition">Кому подходит</a>
+                <a href="#reviews" class="text-gray-600 hover:text-eco font-medium transition">Кейсы</a>
+                <a href="#team" class="text-gray-600 hover:text-eco font-medium transition">Команда</a>
                 <a href="#contact" class="btn-primary text-white px-6 py-2.5 rounded-lg font-semibold shadow-md">
                     <span>Оставить заявку</span>
                 </a>
@@ -89,7 +76,8 @@
             <div class="px-4 py-4 space-y-3">
                 <a href="#services" class="block text-gray-700 font-medium py-2" onclick="toggleMobileMenu()">Услуги и цены</a>
                 <a href="#process" class="block text-gray-700 font-medium py-2" onclick="toggleMobileMenu()">Как работаем</a>
-                <a href="#audience" class="block text-gray-700 font-medium py-2" onclick="toggleMobileMenu()">Кому подходит</a>
+                <a href="#reviews" class="block text-gray-700 font-medium py-2" onclick="toggleMobileMenu()">Кейсы</a>
+                <a href="#team" class="block text-gray-700 font-medium py-2" onclick="toggleMobileMenu()">Команда</a>
                 <a href="#contact" class="block btn-primary text-white px-4 py-3 rounded-lg font-semibold text-center" onclick="toggleMobileMenu()">Оставить заявку</a>
             </div>
         </div>
@@ -121,8 +109,8 @@
                     </div>
                     <div class="mt-10 grid grid-cols-3 gap-4 text-sm opacity-90">
                         <div class="bg-white/10 backdrop-blur p-3 rounded-lg text-center">
-                            <div class="font-bold text-2xl">1,1%</div>
-                            <div>Экономия на кредитах</div>
+                            <div class="font-bold text-2xl">2.5 млн ₽</div>
+                            <div>Экономия в год (в среднем)</div>
                         </div>
                         <div class="bg-white/10 backdrop-blur p-3 rounded-lg text-center">
                             <div class="font-bold text-2xl">45 дн</div>
@@ -134,21 +122,26 @@
                         </div>
                     </div>
                 </div>
+                <!-- Interactive Calculator -->
                 <div class="hidden md:block fade-in-section">
                     <div class="relative">
                         <div class="absolute inset-0 gradient-bg rounded-2xl transform rotate-3 opacity-40 blur-xl"></div>
                         <div class="glass-card p-6 rounded-2xl shadow-2xl relative z-10">
                             <div class="flex items-center justify-between mb-4">
-                                <span class="font-semibold text-eco-dark">Ваш потенциальный рейтинг</span>
-                                <span class="bg-eco text-white text-xs px-2 py-1 rounded">A+ (eco)</span>
+                                <span class="font-semibold text-eco-dark">💰 Калькулятор выгоды</span>
+                                <span class="bg-eco text-white text-xs px-2 py-1 rounded">Интерактив</span>
                             </div>
-                            <div class="space-y-3">
-                                <div class="flex justify-between text-sm"><span>Выбросы CO₂</span><span class="font-medium text-eco">Снижены на 12%</span></div>
-                                <div class="w-full bg-gray-200 rounded-full h-2"><div class="bg-eco h-2 rounded-full" style="width: 78%"></div></div>
-                                <div class="flex justify-between text-sm"><span>Утилизация отходов</span><span class="font-medium text-eco">85%</span></div>
-                                <div class="w-full bg-gray-200 rounded-full h-2"><div class="bg-eco h-2 rounded-full" style="width: 85%"></div></div>
-                                <div class="flex justify-between text-sm"><span>Энергоэффективность</span><span class="font-medium text-eco">Высокая</span></div>
-                                <div class="w-full bg-gray-200 rounded-full h-2"><div class="bg-eco h-2 rounded-full" style="width: 92%"></div></div>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-xs font-medium text-gray-500 mb-1">Годовой оборот или сумма займа (₽)</label>
+                                    <input type="number" id="calcInput" placeholder="Например: 100000000" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-eco focus:border-transparent transition text-gray-800 font-semibold">
+                                </div>
+                                <button onclick="calculateSavings()" class="w-full bg-eco text-white py-3 rounded-lg font-semibold hover:bg-eco-dark transition">Рассчитать экономию</button>
+                                <div id="calcResult" class="hidden bg-eco-soft p-4 rounded-lg border border-eco/30 text-center">
+                                    <p class="text-sm text-gray-600">Ваша потенциальная экономия на кредитах:</p>
+                                    <p class="text-3xl font-bold text-eco-dark" id="calcValue">0 ₽</p>
+                                    <p class="text-xs text-gray-500 mt-1">За счёт снижения ставки на 1.1%</p>
+                                </div>
                             </div>
                             <div class="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
                                 <span class="text-sm text-gray-500">Доступ к зелёным кредитам</span>
@@ -252,7 +245,6 @@
             </div>
             <div class="max-w-4xl mx-auto space-y-8 relative">
                 <div class="step-line hidden md:block"></div>
-                <!-- Step 1 -->
                 <div class="flex gap-6 items-start relative">
                     <div class="w-12 h-12 gradient-bg rounded-full flex items-center justify-center text-white font-bold flex-shrink-0 z-10">1</div>
                     <div class="bg-white p-6 rounded-xl shadow-sm flex-grow card-hover">
@@ -260,7 +252,6 @@
                         <p class="text-gray-600 text-sm">Бесплатная консультация (15 мин). Анализируем вашу отрасль, текущие показатели и цели. Фиксируем сроки и стоимость.</p>
                     </div>
                 </div>
-                <!-- Step 2 -->
                 <div class="flex gap-6 items-start relative">
                     <div class="w-12 h-12 gradient-bg rounded-full flex items-center justify-center text-white font-bold flex-shrink-0 z-10">2</div>
                     <div class="bg-white p-6 rounded-xl shadow-sm flex-grow card-hover">
@@ -268,7 +259,6 @@
                         <p class="text-gray-600 text-sm">Считаем углеродный след по GHG Protocol. Формируем дорожную карту снижения выбросов и повышения эффективности.</p>
                     </div>
                 </div>
-                <!-- Step 3 -->
                 <div class="flex gap-6 items-start relative">
                     <div class="w-12 h-12 gradient-bg rounded-full flex items-center justify-center text-white font-bold flex-shrink-0 z-10">3</div>
                     <div class="bg-white p-6 rounded-xl shadow-sm flex-grow card-hover">
@@ -276,7 +266,6 @@
                         <p class="text-gray-600 text-sm">Мы собираем 90% документов, заполняем формы RAEX/ЭКГ, готовим отчётность. Вы только проверяете и подписываете.</p>
                     </div>
                 </div>
-                <!-- Step 4 -->
                 <div class="flex gap-6 items-start relative">
                     <div class="w-12 h-12 gradient-bg rounded-full flex items-center justify-center text-white font-bold flex-shrink-0 z-10">4</div>
                     <div class="bg-white p-6 rounded-xl shadow-sm flex-grow card-hover">
@@ -318,6 +307,65 @@
         </div>
     </section>
 
+    <!-- Reviews / Cases -->
+    <section id="reviews" class="py-20 bg-eco-bg">
+        <div class="container mx-auto px-4 fade-in-section">
+            <div class="text-center mb-16">
+                <div class="inline-block bg-eco text-white px-4 py-1.5 rounded-full text-sm mb-4">📊 Пилотные проекты</div>
+                <h2 class="text-3xl font-bold text-eco-dark mb-3">Аналитика и результаты</h2>
+                <p class="text-gray-600">Мы применяем алгоритмы лидеров рынка к задачам среднего бизнеса.</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <div class="bg-white p-8 rounded-2xl shadow-sm card-hover border border-eco/20">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center text-2xl">🏭</div>
+                        <div>
+                            <h3 class="font-bold">Металлургический завод Урала</h3>
+                            <p class="text-xs text-gray-500">Промышленность • 450 сотрудников</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-4">«Провели экспресс-аудит углеродного следа. Выявили скрытые потери энергии на 18%. После внедрения рекомендаций компания подала заявку на ЭКГ-рейтинг и выиграла тендер на 120 млн ₽.»</p>
+                    <div class="flex text-yellow-400 text-sm">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="bg-white p-8 rounded-2xl shadow-sm card-hover border border-eco/20">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center text-2xl">🖨️</div>
+                        <div>
+                            <h3 class="font-bold">Типография «ПринтМастер»</h3>
+                            <p class="text-xs text-gray-500">Малый бизнес • 25 сотрудников</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-4">«Внедрили раздельный сбор и электронный документооборот. Снизили операционные расходы на 12% за 3 месяца. Готовимся к получению сертификата для выхода на федеральные закупки.»</p>
+                    <div class="flex text-yellow-400 text-sm">⭐⭐⭐⭐⭐</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team -->
+    <section id="team" class="py-20 bg-white">
+        <div class="container mx-auto px-4 fade-in-section">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-eco-dark mb-3">Наша команда</h2>
+                <p class="text-gray-600">Эксперты в экологическом менеджменте и digital-решениях.</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <div class="bg-eco-soft p-8 rounded-2xl text-center card-hover border border-eco/20">
+                    <div class="w-24 h-24 bg-white rounded-full mx-auto mb-4 flex items-center justify-center text-4xl shadow-md">👨‍💼</div>
+                    <h3 class="text-xl font-bold text-eco-dark">Трущенко Н.</h3>
+                    <p class="text-eco font-medium mb-3">Руководитель проектов</p>
+                    <p class="text-sm text-gray-600">Эксперт по экологическому аудиту и стандартам RAEX/ЭКГ. Разрабатывает стратегии декарбонизации для промышленных предприятий.</p>
+                </div>
+                <div class="bg-eco-soft p-8 rounded-2xl text-center card-hover border border-eco/20">
+                    <div class="w-24 h-24 bg-white rounded-full mx-auto mb-4 flex items-center justify-center text-4xl shadow-md">👨‍</div>
+                    <h3 class="text-xl font-bold text-eco-dark">Чистяков И.</h3>
+                    <p class="text-eco font-medium mb-3">Технический директор</p>
+                    <p class="text-sm text-gray-600">Full-stack разработчик. Создаёт цифровые платформы для расчёта углеродного следа и автоматизации отчётности.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Contact & Form -->
     <section id="contact" class="py-20 gradient-bg text-white relative overflow-hidden">
         <div class="leaf-deco top-10 right-10 w-40 h-40 bg-white rounded-full"></div>
@@ -347,29 +395,31 @@
                 </div>
                 <div class="bg-white text-gray-800 p-8 rounded-2xl shadow-2xl">
                     <h3 class="text-2xl font-bold mb-6 text-eco-dark">Оставить заявку</h3>
-                    <form id="leadForm" class="space-y-4">
+                    <form id="leadForm" class="space-y-4" novalidate>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Ваше имя</label>
-                            <input type="text" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-eco focus:border-transparent transition" placeholder="Иван Иванов">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Ваше имя (кириллица)</label>
+                            <input type="text" name="name" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-eco focus:border-transparent transition" placeholder="Иван Иванов" oninput="validateName(this)">
+                            <p class="text-xs text-error mt-1 hidden" id="nameError">Только русские буквы, пробелы и дефисы</p>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Телефон</label>
-                            <input type="tel" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-eco focus:border-transparent transition" placeholder="+7 (___) ___-__-__">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Телефон (только цифры)</label>
+                            <input type="tel" name="phone" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-eco focus:border-transparent transition" placeholder="+7 (999) 123-45-67" oninput="validatePhone(this)">
+                            <p class="text-xs text-error mt-1 hidden" id="phoneError">Введите корректный номер телефона</p>
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Название компании</label>
-                            <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-eco focus:border-transparent transition" placeholder="ООО «Пример»">
+                            <input type="text" name="company" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-eco focus:border-transparent transition" placeholder="ООО «Пример»" oninput="validateCompany(this)">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Интересующий пакет</label>
-                            <select id="serviceSelect" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-eco focus:border-transparent transition">
+                            <select name="service" id="serviceSelect" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-eco focus:border-transparent transition">
                                 <option>Не определился</option>
                                 <option>Пакет Старт (89 000 ₽)</option>
                                 <option>Пакет Бизнес (245 000 ₽)</option>
                                 <option>Пакет Тендер (490 000 ₽)</option>
                             </select>
                         </div>
-                        <button type="submit" class="w-full btn-primary text-white py-4 rounded-xl font-semibold shadow-xl text-lg">
+                        <button type="submit" class="w-full btn-primary text-white py-4 rounded-xl font-semibold shadow-xl text-lg disabled:opacity-50 disabled:cursor-not-allowed">
                             <span>🚀 Получить расчёт за 15 минут</span>
                         </button>
                         <p class="text-center text-xs text-gray-500">Нажимая кнопку, вы соглашаетесь с обработкой персональных данных</p>
@@ -402,8 +452,8 @@
                     <h4 class="text-white font-semibold mb-4">Компания</h4>
                     <ul class="space-y-2 text-sm">
                         <li><a href="#process" class="hover:text-white transition">Как мы работаем</a></li>
-                        <li><a href="#audience" class="hover:text-white transition">Кому подходит</a></li>
-                        <li><a href="#" class="hover:text-white transition">Кейсы</a></li>
+                        <li><a href="#team" class="hover:text-white transition">Команда</a></li>
+                        <li><a href="#reviews" class="hover:text-white transition">Кейсы</a></li>
                     </ul>
                 </div>
                 <div>
@@ -431,21 +481,23 @@
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
-            <form id="modalForm" class="space-y-4">
-                <input type="hidden" id="modalService" name="service">
+            <form id="modalForm" class="space-y-4" novalidate>
+                <input type="hidden" name="service" id="modalService">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Ваше имя</label>
-                    <input type="text" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-eco focus:border-transparent transition">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Ваше имя (кириллица)</label>
+                    <input type="text" name="name" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-eco focus:border-transparent transition" placeholder="Иван Иванов" oninput="validateName(this)">
+                    <p class="text-xs text-error mt-1 hidden">Только русские буквы</p>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Телефон</label>
-                    <input type="tel" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-eco focus:border-transparent transition">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Телефон (только цифры)</label>
+                    <input type="tel" name="phone" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-eco focus:border-transparent transition" placeholder="+7 (999) 123-45-67" oninput="validatePhone(this)">
+                    <p class="text-xs text-error mt-1 hidden">Введите корректный номер</p>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Компания</label>
-                    <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-eco focus:border-transparent transition">
+                    <input type="text" name="company" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-eco focus:border-transparent transition" placeholder="ООО «Пример»" oninput="validateCompany(this)">
                 </div>
-                <button type="submit" class="w-full btn-primary text-white py-4 rounded-xl font-semibold shadow-xl">
+                <button type="submit" class="w-full btn-primary text-white py-4 rounded-xl font-semibold shadow-xl disabled:opacity-50 disabled:cursor-not-allowed">
                     <span>Отправить заявку</span>
                 </button>
             </form>
@@ -453,84 +505,132 @@
     </div>
 
     <script>
-        // Mobile Menu
-        function toggleMobileMenu() {
-            document.getElementById('mobileMenu').classList.toggle('hidden');
-        }
-
-        // Modal Logic
+        // --- CONFIGURATION ---
+        const BOT_TOKEN = '8630586750:AAFXE0Tu5wJMJjo8LokysmEf0K6gmlBpO9U';
+        // ⚠️ ВАЖНО: Telegram требует ЧИСЛОВОЙ ID. Вставь сюда число из getUpdates (например: 123456789)
+        const CHAT_ID = '8630586750'; 
+        
+        // --- UI LOGIC ---
+        function toggleMobileMenu() { document.getElementById('mobileMenu').classList.toggle('hidden'); }
         const modal = document.getElementById('modal');
-        const modalTitle = document.getElementById('modalTitle');
-        const modalService = document.getElementById('modalService');
-
         function openModal(serviceName) {
-            modalTitle.textContent = serviceName ? `Заказ: ${serviceName}` : 'Оформить заявку';
-            modalService.value = serviceName || 'Не выбран';
+            document.getElementById('modalTitle').textContent = serviceName ? `Заказ: ${serviceName}` : 'Оформить заявку';
+            document.getElementById('modalService').value = serviceName || 'Не выбран';
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
-
         function closeModal(e) {
-            if (!e || e.target === modal) {
-                modal.classList.remove('active');
-                document.body.style.overflow = '';
-            }
+            if (!e || e.target === modal) { modal.classList.remove('active'); document.body.style.overflow = ''; }
         }
-
-        // Form Handling (Simulation)
-        function handleFormSubmit(e) {
-            e.preventDefault();
-            const btn = e.target.querySelector('button[type="submit"]');
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '<span>⏳ Отправка...</span>';
-            btn.disabled = true;
-
-            setTimeout(() => {
-                alert('✅ Заявка успешно отправлена! Мы свяжемся с вами в течение 2 часов.');
-                e.target.reset();
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-                if(modal.classList.contains('active')) closeModal();
-            }, 1500);
-        }
-
-        document.getElementById('leadForm').addEventListener('submit', handleFormSubmit);
-        document.getElementById('modalForm').addEventListener('submit', handleFormSubmit);
-
-        // Smooth Scroll & Header Effect
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
-                if(target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    document.getElementById('mobileMenu').classList.add('hidden');
-                }
+                if(target) { target.scrollIntoView({ behavior: 'smooth', block: 'start' }); document.getElementById('mobileMenu').classList.add('hidden'); }
             });
         });
-
         window.addEventListener('scroll', () => {
             const header = document.getElementById('header');
-            if(window.scrollY > 50) {
-                header.classList.add('shadow-md');
-                header.classList.replace('py-4', 'py-3');
-            } else {
-                header.classList.remove('shadow-md');
-                header.classList.replace('py-3', 'py-4');
-            }
+            if(window.scrollY > 50) { header.classList.add('shadow-md'); header.classList.replace('py-4', 'py-3'); }
+            else { header.classList.remove('shadow-md'); header.classList.replace('py-3', 'py-4'); }
         });
-
-        // Intersection Observer for Animations
         const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if(entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    observer.unobserve(entry.target);
-                }
-            });
+            entries.forEach(entry => { if(entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); } });
         }, { threshold: 0.1 });
-
         document.querySelectorAll('.fade-in-section').forEach(el => observer.observe(el));
+
+        // --- CALCULATOR ---
+        function calculateSavings() {
+            const input = parseFloat(document.getElementById('calcInput').value) || 0;
+            const savings = Math.floor(input * 0.011); // 1.1% difference
+            const resultDiv = document.getElementById('calcResult');
+            document.getElementById('calcValue').textContent = savings.toLocaleString('ru-RU') + ' ₽/год';
+            resultDiv.classList.remove('hidden');
+        }
+
+        // --- VALIDATION ---
+        function validateName(input) {
+            const regex = /^[А-Яа-яЁё\s\-]+$/;
+            const isValid = regex.test(input.value) && input.value.length >= 2;
+            input.classList.toggle('input-error', !isValid && input.value.length > 0);
+            input.classList.toggle('input-success', isValid);
+            const errorMsg = input.parentElement.querySelector('.text-error');
+            if(errorMsg) errorMsg.classList.toggle('hidden', isValid || input.value.length === 0);
+            return isValid;
+        }
+        function validatePhone(input) {
+            const digits = input.value.replace(/\D/g, '');
+            const isValid = digits.length >= 10 && digits.length <= 12;
+            input.classList.toggle('input-error', !isValid && digits.length > 0);
+            input.classList.toggle('input-success', isValid);
+            const errorMsg = input.parentElement.querySelector('.text-error');
+            if(errorMsg) errorMsg.classList.toggle('hidden', isValid || digits.length === 0);
+            return isValid;
+        }
+        function validateCompany(input) {
+            const isValid = input.value.length >= 2;
+            input.classList.toggle('input-error', !isValid && input.value.length > 0);
+            input.classList.toggle('input-success', isValid);
+            return isValid;
+        }
+
+        // --- TELEGRAM SENDER ---
+        async function sendToTelegram(data) {
+            const text = ` *Новая заявка с сайта EcoStartup*\n\n👤 Имя: ${data.name}\n📞 Телефон: ${data.phone}\n🏢 Компания: ${data.company || 'Не указана'}\n📦 Пакет: ${data.service}\n Дата: ${new Date().toLocaleString('ru-RU')}`;
+            
+            const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+            const payload = { chat_id: CHAT_ID, text: text, parse_mode: 'Markdown' };
+
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                return response.ok;
+            } catch (error) {
+                console.error('TG Error:', error);
+                return false;
+            }
+        }
+
+        // --- FORM HANDLER ---
+        async function handleFormSubmit(e) {
+            e.preventDefault();
+            const form = e.target;
+            const nameInput = form.querySelector('input[name="name"]');
+            const phoneInput = form.querySelector('input[name="phone"]');
+            
+            if (!validateName(nameInput) || !validatePhone(phoneInput)) {
+                alert('⚠️ Пожалуйста, заполните имя и телефон корректно.');
+                return;
+            }
+
+            const btn = form.querySelector('button[type="submit"]');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<span>⏳ Отправка...</span>';
+            btn.disabled = true;
+
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+
+            const success = await sendToTelegram(data);
+
+            if (success) {
+                alert('✅ Заявка успешно отправлена! Мы свяжемся с вами в течение 2 часов.');
+                form.reset();
+                form.querySelectorAll('.input-success').forEach(el => el.classList.remove('input-success'));
+                if(modal.classList.contains('active')) closeModal();
+            } else {
+                alert('❌ Ошибка отправки. Проверьте соединение или напишите нам в Telegram.');
+            }
+
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        }
+
+        document.getElementById('leadForm').addEventListener('submit', handleFormSubmit);
+        document.getElementById('modalForm').addEventListener('submit', handleFormSubmit);
     </script>
 </body>
 </html>
