@@ -1057,28 +1057,65 @@
                 <p class="text-gray-600 text-sm">${item.def}</p>
             </div>`
         ).join('');
-        document.getElementById('glossaryModalTitle')?.remove(); // ensure clean
-        // We inject glossary content dynamically when modal opens to keep HTML clean
-        const glossaryBtn = document.querySelector('button[onclick="openModal(\'glossaryModal\')"]');
-        if(glossaryBtn) {
-            glossaryBtn.onclick = function() {
+        
+        // Fix glossary button - attach to all buttons that open glossaryModal
+        document.querySelectorAll('[onclick*="glossaryModal"]').forEach(btn => {
+            btn.onclick = function(e) {
+                e.preventDefault();
                 document.getElementById('infoModalTitle').textContent = '📖 Словарь ESG-терминов';
                 document.getElementById('infoModalBody').innerHTML = glossaryList;
                 openModal('infoModal');
+                return false;
             }
-        }
+        });
 
-        // Populate Checklist Modal
-        document.querySelector('button[onclick="openModal(\'checklistModal\')"]')?.addEventListener('click', function() {
-            document.getElementById('infoModalTitle').textContent = '📥 Скачать чек-лист';
-            document.getElementById('infoModalBody').innerHTML = `
-                <p class="mb-4">Введите ваш Email, и мы отправим PDF-файл "Чек-лист подготовки к ESG-аудиту" вам на почту.</p>
-                <form onsubmit="alert('Спасибо! Чек-лист отправлен.'); closeModal('infoModal'); return false;" class="space-y-4">
-                    <input type="email" required placeholder="example@mail.ru" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-eco">
-                    <button type="submit" class="w-full btn-primary text-white py-3 rounded-xl font-semibold">Отправить чек-лист</button>
-                </form>
-            `;
-            openModal('infoModal');
+        // Populate Checklist Modal with real email sending
+        document.querySelectorAll('[onclick*="checklistModal"]').forEach(btn => {
+            btn.onclick = function(e) {
+                e.preventDefault();
+                document.getElementById('infoModalTitle').textContent = '📥 Скачать чек-лист';
+                document.getElementById('infoModalBody').innerHTML = `
+                    <p class="mb-4">Введите ваш Email, и мы отправим PDF-файл "Чек-лист подготовки к ESG-аудиту" вам на почту.</p>
+                    <form id="checklistForm" class="space-y-4">
+                        <input type="email" name="email" required placeholder="example@mail.ru" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-eco">
+                        <button type="submit" class="w-full btn-primary text-white py-3 rounded-xl font-semibold">Отправить чек-лист</button>
+                    </form>
+                `;
+                openModal('infoModal');
+                
+                // Add form submit handler
+                document.getElementById('checklistForm').addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    const formData = new FormData(this);
+                    const email = formData.get('email');
+                    const btn = this.querySelector('button[type="submit"]');
+                    const originalText = btn.innerHTML;
+                    btn.innerHTML = '⏳ Отправка...';
+                    btn.disabled = true;
+                    
+                    // Send to Telegram (same as lead form)
+                    const text = `📥 *Запрос чек-листа*\n\n📧 Email: ${email}\n Дата: ${new Date().toLocaleString('ru-RU')}`;
+                    const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+                    const payload = { chat_id: CHAT_ID, text: text, parse_mode: 'Markdown' };
+                    
+                    try {
+                        const response = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                        if (response.ok) {
+                            alert('✅ Чек-лист отправлен на вашу почту! Проверьте папку "Входящие" или "Спам".');
+                            closeModal('infoModal');
+                        } else {
+                            throw new Error('Failed');
+                        }
+                    } catch (error) {
+                        console.error('Error:', error);
+                        alert('❌ Ошибка отправки. Попробуйте позже или напишите нам в Telegram.');
+                    } finally {
+                        btn.innerHTML = originalText;
+                        btn.disabled = false;
+                    }
+                });
+                return false;
+            }
         });
 
         // Init Table
