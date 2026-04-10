@@ -38,7 +38,7 @@
         .btn-primary span { position: relative; z-index: 1; }
         .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 100; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
         .modal-overlay.active { opacity: 1; pointer-events: auto; }
-        .modal-content { background: white; border-radius: 16px; padding: 2rem; width: 95%; max-width: 600px; transform: scale(0.95); transition: transform 0.3s ease; max-height: 90vh; overflow-y: auto; }
+        .modal-content { background: white; border-radius: 16px; padding: 2rem; width: 95%; max-width: 700px; transform: scale(0.95); transition: transform 0.3s ease; max-height: 90vh; overflow-y: auto; }
         .modal-overlay.active .modal-content { transform: scale(1); }
         .fade-in-section { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
         .fade-in-section.visible { opacity: 1; transform: translateY(0); }
@@ -48,6 +48,8 @@
         .input-success { border-color: #2E7D32 !important; background-color: #F0FDF4; }
         .table-row-hover:hover { background-color: #F0FDF4; }
         .pagination-btn.active { background-color: #2E7D32; color: white; }
+        .details-box { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out; }
+        .details-box.open { max-height: 500px; }
     </style>
 </head>
 <body class="bg-white text-gray-800 overflow-x-hidden">
@@ -61,10 +63,11 @@
                 </div>
                 <span class="text-xl font-bold gradient-text">EcoStartup</span>
             </a>
-            <nav class="hidden md:flex space-x-8 items-center">
+            <nav class="hidden md:flex space-x-6 items-center">
                 <a href="#services" class="text-gray-600 hover:text-eco font-medium transition">Услуги</a>
                 <a href="#benchmarks" class="text-gray-600 hover:text-eco font-medium transition">Рэнкинги</a>
-                <a href="#process" class="text-gray-600 hover:text-eco font-medium transition">Как работаем</a>
+                <a href="#process" class="text-gray-600 hover:text-eco font-medium transition">Процесс</a>
+                <a href="#" onclick="openModal('glossaryModal')" class="text-gray-600 hover:text-eco font-medium transition">Словарь</a>
                 <a href="#contact" class="btn-primary text-white px-6 py-2.5 rounded-lg font-semibold shadow-md">
                     <span>Оставить заявку</span>
                 </a>
@@ -77,7 +80,8 @@
             <div class="px-4 py-4 space-y-3">
                 <a href="#services" class="block text-gray-700 font-medium py-2" onclick="toggleMobileMenu()">Услуги и цены</a>
                 <a href="#benchmarks" class="block text-gray-700 font-medium py-2" onclick="toggleMobileMenu()">Рэнкинги</a>
-                <a href="#process" class="block text-gray-700 font-medium py-2" onclick="toggleMobileMenu()">Как работаем</a>
+                <a href="#process" class="block text-gray-700 font-medium py-2" onclick="toggleMobileMenu()">Процесс</a>
+                <a href="#" onclick="openModal('glossaryModal'); toggleMobileMenu()" class="block text-gray-700 font-medium py-2">Словарь терминов</a>
                 <a href="#contact" class="block btn-primary text-white px-4 py-3 rounded-lg font-semibold text-center" onclick="toggleMobileMenu()">Оставить заявку</a>
             </div>
         </div>
@@ -236,14 +240,14 @@
         </div>
     </section>
 
-    <!-- Benchmarks & Rankings Section -->
+    <!-- Benchmarks & Rankings Section (Expanded) -->
     <section id="benchmarks" class="py-20 bg-eco-bg">
         <div class="container mx-auto px-4 fade-in-section">
             <div class="text-center mb-12">
                 <div class="inline-block bg-eco text-white px-4 py-1.5 rounded-full text-sm mb-4">📊 Рэнкинги и бенчмарки</div>
-                <h2 class="text-3xl font-bold text-eco-dark mb-3">Сравните себя с конкурентами</h2>
+                <h2 class="text-3xl font-bold text-eco-dark mb-3">Сравните себя с лидерами рынка</h2>
                 <p class="text-gray-600 max-w-3xl mx-auto">
-                    Узнайте проходной балл для победы в тендерах, сравните показатели с лидерами отрасли и поймите, какой рейтинг нужен вашему бизнесу для льготных кредитов. Данные основаны на открытых реестрах 2025 г.
+                    Узнайте проходной балл для победы в тендерах. Нажмите на компанию, чтобы увидеть детали её экологического пути. Данные основаны на открытых реестрах 2025 г.
                 </p>
             </div>
             
@@ -279,6 +283,7 @@
                                 <th class="px-6 py-4 font-semibold">Регион</th>
                                 <th class="px-6 py-4 font-semibold">ESG-балл</th>
                                 <th class="px-6 py-4 font-semibold">Статус</th>
+                                <th class="px-6 py-4 font-semibold">Действие</th>
                             </tr>
                         </thead>
                         <tbody id="benchTableBody" class="divide-y divide-gray-100 text-sm">
@@ -301,93 +306,176 @@
         </div>
     </section>
 
-    <!-- Process -->
+    <!-- Process Section (Expanded) -->
     <section id="process" class="py-20 bg-white">
         <div class="container mx-auto px-4 fade-in-section">
             <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold text-eco-dark mb-3">Как мы работаем</h2>
-                <p class="text-gray-600">4 простых шага от заявки до сертификата</p>
+                <h2 class="text-3xl font-bold text-eco-dark mb-3">Как мы работаем: от заявки до сертификата</h2>
+                <p class="text-gray-600">Подробный разбор каждого этапа с перечнем необходимых документов.</p>
             </div>
             <div class="max-w-4xl mx-auto space-y-8 relative">
                 <div class="step-line hidden md:block"></div>
+                
+                <!-- Step 1 -->
                 <div class="flex gap-6 items-start relative">
                     <div class="w-12 h-12 gradient-bg rounded-full flex items-center justify-center text-white font-bold flex-shrink-0 z-10">1</div>
-                    <div class="bg-white p-6 rounded-xl shadow-sm flex-grow card-hover">
+                    <div class="bg-white p-6 rounded-xl shadow-sm flex-grow card-hover border border-gray-100">
                         <h3 class="font-bold text-lg mb-2">Заявка и экспресс-аудит</h3>
                         <p class="text-gray-600 text-sm">Бесплатная консультация (15 мин). Анализируем вашу отрасль, текущие показатели и цели. Фиксируем сроки и стоимость.</p>
+                        <button onclick="toggleDetails('details1')" class="text-eco font-semibold text-sm mt-3 flex items-center hover:underline">
+                            📖 Что входит в аудит и какие документы нужны?
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div id="details1" class="details-box mt-4 bg-eco-soft p-4 rounded-lg text-sm text-gray-700">
+                            <p><strong>Что мы делаем:</strong> Считаем предварительный углеродный след по методологии <strong>GHG Protocol</strong> и ГОСТ Р ИСО 14064. Оцениваем разрыв между текущим состоянием и требованиями рейтинговых агентств (RAEX, ЭКГ).</p>
+                            <p class="mt-2"><strong>От вас потребуется (базовый пакет):</strong></p>
+                            <ul class="list-disc pl-5 mt-1 space-y-1">
+                                <li>Карточка предприятия (ИНН, ОКВЭД)</li>
+                                <li>Справка о численности персонала</li>
+                                <li>Базовая информация о потреблении энергии и топлива за прошлый год</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
+                
+                <!-- Step 2 -->
                 <div class="flex gap-6 items-start relative">
                     <div class="w-12 h-12 gradient-bg rounded-full flex items-center justify-center text-white font-bold flex-shrink-0 z-10">2</div>
-                    <div class="bg-white p-6 rounded-xl shadow-sm flex-grow card-hover">
+                    <div class="bg-white p-6 rounded-xl shadow-sm flex-grow card-hover border border-gray-100">
                         <h3 class="font-bold text-lg mb-2">Расчёт и стратегия</h3>
                         <p class="text-gray-600 text-sm">Считаем углеродный след по GHG Protocol. Формируем дорожную карту снижения выбросов и повышения эффективности.</p>
+                        <button onclick="toggleDetails('details2')" class="text-eco font-semibold text-sm mt-3 flex items-center hover:underline">
+                            📖 Разъяснение про Scope 1, 2, 3 и стратегию
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div id="details2" class="details-box mt-4 bg-eco-soft p-4 rounded-lg text-sm text-gray-700">
+                            <p><strong>Что такое Scope?</strong> Это границы учёта выбросов.</p>
+                            <ul class="list-disc pl-5 mt-1 space-y-1">
+                                <li><strong>Scope 1:</strong> Прямые выбросы от ваших источников (котельные, автопарк, техпроцессы).</li>
+                                <li><strong>Scope 2:</strong> Косвенные выбросы от покупки электроэнергии и тепла.</li>
+                                <li><strong>Scope 3:</strong> Остальные косвенные выбросы цепочки создания стоимости (логистика поставщиков, командировки, утилизация).</li>
+                            </ul>
+                            <p class="mt-2"><strong>Результат этапа:</strong> Вы получаете документ «Дорожная карта ESG-трансформации» с конкретными целями (например, «снизить Scope 1 на 15% к 2027 году»).</p>
+                        </div>
                     </div>
                 </div>
+                
+                <!-- Step 3 -->
                 <div class="flex gap-6 items-start relative">
                     <div class="w-12 h-12 gradient-bg rounded-full flex items-center justify-center text-white font-bold flex-shrink-0 z-10">3</div>
-                    <div class="bg-white p-6 rounded-xl shadow-sm flex-grow card-hover">
+                    <div class="bg-white p-6 rounded-xl shadow-sm flex-grow card-hover border border-gray-100">
                         <h3 class="font-bold text-lg mb-2">Сбор документов и подача</h3>
                         <p class="text-gray-600 text-sm">Мы собираем 90% документов, заполняем формы RAEX/ЭКГ, готовим отчётность. Вы только проверяете и подписываете.</p>
+                        <button onclick="toggleDetails('details3')" class="text-eco font-semibold text-sm mt-3 flex items-center hover:underline">
+                            📖 Полный чек-лист документов для верификации
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div id="details3" class="details-box mt-4 bg-eco-soft p-4 rounded-lg text-sm text-gray-700">
+                            <p>Для прохождения верификации нам понадобятся копии следующих документов (мы поможем их структурировать):</p>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mt-2">
+                                <div class="flex items-start"><span class="text-eco mr-2">✓</span> Свидетельство о постановке на учёт</div>
+                                <div class="flex items-start"><span class="text-eco mr-2">✓</span> Устав и учредительные документы</div>
+                                <div class="flex items-start"><span class="text-eco mr-2">✓</span> Бухгалтерская отчётность за 2 года</div>
+                                <div class="flex items-start"><span class="text-eco mr-2">✓</span> Паспорта отходов (1-4 класс опасности)</div>
+                                <div class="flex items-start"><span class="text-eco mr-2">✓</span> Акты о передаче отходов на утилизацию</div>
+                                <div class="flex items-start"><span class="text-eco mr-2">✓</span> Данные по потреблению ТЭР (Топливо, Энергия, Ресурсы)</div>
+                                <div class="flex items-start"><span class="text-eco mr-2">✓</span> Отчёты о выполнении природоохранных планов</div>
+                                <div class="flex items-start"><span class="text-eco mr-2">✓</span> Лицензии (если деятельность лицензируемая)</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                
+                <!-- Step 4 -->
                 <div class="flex gap-6 items-start relative">
                     <div class="w-12 h-12 gradient-bg rounded-full flex items-center justify-center text-white font-bold flex-shrink-0 z-10">4</div>
-                    <div class="bg-white p-6 rounded-xl shadow-sm flex-grow card-hover">
+                    <div class="bg-white p-6 rounded-xl shadow-sm flex-grow card-hover border border-gray-100">
                         <h3 class="font-bold text-lg mb-2">Сертификат и тендерная упаковка</h3>
                         <p class="text-gray-600 text-sm">Получаете официальный рейтинг. Готовим выписки для повышения баллов в госзакупках. Поддерживаем 6 месяцев.</p>
+                        <button onclick="toggleDetails('details4')" class="text-eco font-semibold text-sm mt-3 flex items-center hover:underline">
+                            📖 Что вы получаете на руки?
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div id="details4" class="details-box mt-4 bg-eco-soft p-4 rounded-lg text-sm text-gray-700">
+                            <p><strong>Финальный пакет документов:</strong></p>
+                            <ul class="list-disc pl-5 mt-1 space-y-1">
+                                <li>Официальный сертификат ESG/ЭКГ-рейтинга от агентства (RAEX или ЭКГ).</li>
+                                <li>Развёрнутый отчёт рейтингового агентства с аналитикой.</li>
+                                <li>Информационное письмо для участия в тендерах (44-ФЗ, 223-ФЗ), подтверждающее ваш статус.</li>
+                                <li>Пресс-релиз для публикации на вашем сайте и в СМИ.</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Audience -->
+    <!-- Audience Section (Interactive) -->
     <section class="py-20 bg-eco-bg">
         <div class="container mx-auto px-4 fade-in-section">
             <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold text-eco-dark mb-3">Кому это нужно?</h2>
-                <p class="text-gray-600">Мы работаем с компаниями, у которых есть бюджет на развитие и потребность в конкурентных преимуществах.</p>
+                <h2 class="text-3xl font-bold text-eco-dark mb-3">Кому это нужно? Выберите вашу отрасль</h2>
+                <p class="text-gray-600">Нажмите на карточку, чтобы узнать конкретные кейсы, требования и выгоды для вашего бизнеса.</p>
             </div>
             <div class="grid md:grid-cols-3 gap-6">
-                <div class="bg-white p-8 rounded-2xl border border-eco/20 card-hover shadow-sm">
+                <div class="bg-white p-8 rounded-2xl border border-eco/20 card-hover shadow-sm cursor-pointer relative group" onclick="openAudienceModal('industry')">
+                    <div class="absolute top-4 right-4 text-eco opacity-0 group-hover:opacity-100 transition">🔍</div>
                     <div class="text-4xl mb-4">🏭</div>
                     <h3 class="font-bold text-xl mb-3">Промышленные предприятия</h3>
                     <p class="text-gray-600 text-sm mb-4">Металлургия, машиностроение, химия. Доступ к «зелёным» кредитам, экспортным контрактам и снижению регуляторных рисков.</p>
-                    <div class="text-eco font-semibold text-sm">Средний чек: 245 000 – 490 000 ₽</div>
+                    <div class="text-eco font-semibold text-sm flex items-center">
+                        Подробнее <span class="ml-2 text-lg">→</span>
+                    </div>
                 </div>
-                <div class="bg-white p-8 rounded-2xl border border-eco/20 card-hover shadow-sm">
+                <div class="bg-white p-8 rounded-2xl border border-eco/20 card-hover shadow-sm cursor-pointer relative group" onclick="openAudienceModal('construction')">
+                    <div class="absolute top-4 right-4 text-eco opacity-0 group-hover:opacity-100 transition">🔍</div>
                     <div class="text-4xl mb-4">🏗️</div>
                     <h3 class="font-bold text-xl mb-3">Строительство и девелопмент</h3>
                     <p class="text-gray-600 text-sm mb-4">Соответствие зелёным стандартам, победа в премиум-тендерах, повышение инвестиционной привлекательности проектов.</p>
-                    <div class="text-eco font-semibold text-sm">Средний чек: 245 000 – 490 000 ₽</div>
+                    <div class="text-eco font-semibold text-sm flex items-center">
+                        Подробнее <span class="ml-2 text-lg">→</span>
+                    </div>
                 </div>
-                <div class="bg-white p-8 rounded-2xl border border-eco/20 card-hover shadow-sm">
+                <div class="bg-white p-8 rounded-2xl border border-eco/20 card-hover shadow-sm cursor-pointer relative group" onclick="openAudienceModal('suppliers')">
+                    <div class="absolute top-4 right-4 text-eco opacity-0 group-hover:opacity-100 transition">🔍</div>
                     <div class="text-4xl mb-4">📦</div>
                     <h3 class="font-bold text-xl mb-3">Поставщики для госзакупок</h3>
                     <p class="text-gray-600 text-sm mb-4">Обязательный ЭКГ-балл для участия в крупных контрактах. Увеличение шансов на победу в тендерах на 30-40%.</p>
-                    <div class="text-eco font-semibold text-sm">Средний чек: 89 000 – 245 000 ₽</div>
+                    <div class="text-eco font-semibold text-sm flex items-center">
+                        Подробнее <span class="ml-2 text-lg">→</span>
+                    </div>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- Checklist Download Section (New) -->
+    <section class="py-16 gradient-bg text-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold mb-4">Не знаете, с чего начать?</h2>
+            <p class="text-lg mb-8 max-w-2xl mx-auto">Скачайте наш бесплатный «Чек-лист подготовки к ESG-аудиту». В нём собраны все документы и шаги, которые нужно выполнить до прихода аудитора.</p>
+            <button onclick="openModal('checklistModal')" class="bg-white text-eco px-8 py-4 rounded-xl font-bold hover:bg-gray-100 transition shadow-xl text-lg">
+                📥 Скачать чек-лист бесплатно
+            </button>
         </div>
     </section>
 
     <!-- Contact & Footer -->
-    <section id="contact" class="py-20 gradient-bg text-white relative overflow-hidden">
-        <div class="leaf-deco top-10 right-10 w-40 h-40 bg-white rounded-full"></div>
+    <section id="contact" class="py-20 bg-white relative overflow-hidden">
         <div class="container mx-auto px-4 relative z-10">
             <div class="grid md:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
                 <div>
-                    <h2 class="text-3xl md:text-4xl font-bold mb-6">Готовы получить рейтинг и выигрывать тендеры?</h2>
-                    <p class="text-lg mb-8 opacity-90">Оставьте заявку — проведём бесплатный экспресс-аудит вашей компании и рассчитаем точную стоимость под ваш масштаб. Ответим в течение 2 часов.</p>
-                    <div class="space-y-4 mb-8">
+                    <h2 class="text-3xl md:text-4xl font-bold text-eco-dark mb-6">Готовы получить рейтинг и выигрывать тендеры?</h2>
+                    <p class="text-lg text-gray-600 mb-8">Оставьте заявку — проведём бесплатный экспресс-аудит вашей компании и рассчитаем точную стоимость под ваш масштаб. Ответим в течение 2 часов.</p>
+                    <div class="space-y-4 mb-8 text-gray-700">
                         <div class="flex items-center space-x-3">
                             <span class="text-2xl">📧</span>
-                            <a href="mailto:pokssi99p@gmail.com" class="hover:underline">pokssi99p@gmail.com</a>
+                            <a href="mailto:pokssi99p@gmail.com" class="hover:text-eco underline">pokssi99p@gmail.com</a>
                         </div>
                         <div class="flex items-center space-x-3">
                             <span class="text-2xl">📞</span>
-                            <a href="tel:+79000916748" class="hover:underline">+7 (900) 091-67-48</a>
+                            <a href="tel:+79000916748" class="hover:text-eco underline">+7 (900) 091-67-48</a>
                         </div>
                         <div class="flex items-center space-x-3">
                             <span class="text-2xl">💬</span>
@@ -395,11 +483,11 @@
                         </div>
                     </div>
                     <div class="flex space-x-4">
-                        <a href="https://t.me/Pokssip" target="_blank" class="bg-white/20 hover:bg-white/30 px-6 py-3 rounded-lg font-semibold transition backdrop-blur">Написать в Telegram</a>
-                        <a href="https://wa.me/79000916748" target="_blank" class="bg-white/20 hover:bg-white/30 px-6 py-3 rounded-lg font-semibold transition backdrop-blur">Написать в WhatsApp</a>
+                        <a href="https://t.me/Pokssip" target="_blank" class="bg-eco text-white hover:bg-eco-dark px-6 py-3 rounded-lg font-semibold transition">Написать в Telegram</a>
+                        <a href="https://wa.me/79000916748" target="_blank" class="bg-eco text-white hover:bg-eco-dark px-6 py-3 rounded-lg font-semibold transition">Написать в WhatsApp</a>
                     </div>
                 </div>
-                <div class="bg-white text-gray-800 p-8 rounded-2xl shadow-2xl">
+                <div class="bg-eco-soft p-8 rounded-2xl shadow-2xl border border-eco/20">
                     <h3 class="text-2xl font-bold mb-6 text-eco-dark">Получить расчёт за 15 минут</h3>
                     <form id="leadForm" class="space-y-4" novalidate>
                         <div>
@@ -463,6 +551,7 @@
                         <li>📧 pokssi99p@gmail.com</li>
                         <li>💬 Telegram: @Pokssip</li>
                         <li>📍 Челябинская область, РФ</li>
+                        <li class="mt-4"><button onclick="openModal('glossaryModal')" class="text-eco hover:text-white transition font-semibold underline">📖 Словарь терминов</button></li>
                     </ul>
                 </div>
             </div>
@@ -472,6 +561,21 @@
             </div>
         </div>
     </footer>
+
+    <!-- Generic Modal Container (For Glossary, Checklist, etc.) -->
+    <div id="infoModal" class="modal-overlay" onclick="closeModal('infoModal')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-eco-dark" id="infoModalTitle">Заголовок</h3>
+                <button onclick="closeModal('infoModal')" class="text-gray-400 hover:text-gray-600 transition">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div id="infoModalBody" class="text-gray-700 leading-relaxed">
+                <!-- Content injected via JS -->
+            </div>
+        </div>
+    </div>
 
     <!-- Quiz Modal (Quiz first, then contact form) -->
     <div id="quizModal" class="modal-overlay" onclick="closeQuizModal(event)">
@@ -619,90 +723,86 @@
         const BOT_TOKEN = '8630586750:AAFXE0Tu5wJMJjo8LokysmEf0K6gmlBpO9U';
         const CHAT_ID = 'ВАШ_ЧИСЛОВОЙ_CHAT_ID'; 
         
-        // --- BENCHMARK DATA (50+ companies) ---
+        // --- DATA ---
         const benchmarks = [
-            // МЕТАЛЛУРГИЯ (15)
-            { name: 'Северсталь', industry: 'metallurgy', region: 'central', score: 92, status: 'AAA (eco)' },
-            { name: 'Норникель', industry: 'metallurgy', region: 'siberia', score: 88, status: 'AA+ (eco)' },
-            { name: 'РУСАЛ', industry: 'metallurgy', region: 'siberia', score: 85, status: 'AA (eco)' },
-            { name: 'ЧТПЗ', industry: 'metallurgy', region: 'ural', score: 84, status: 'AA (eco)' },
-            { name: 'ЧМК', industry: 'metallurgy', region: 'ural', score: 82, status: 'A+ (eco)' },
-            { name: 'Мечел', industry: 'metallurgy', region: 'ural', score: 78, status: 'A (eco)' },
-            { name: 'НЛМК', industry: 'metallurgy', region: 'central', score: 90, status: 'AA+ (eco)' },
-            { name: 'ММК', industry: 'metallurgy', region: 'ural', score: 80, status: 'A+ (eco)' },
-            { name: 'АЛРОСА', industry: 'metallurgy', region: 'siberia', score: 75, status: 'A (eco)' },
-            { name: 'Полюс', industry: 'metallurgy', region: 'siberia', score: 83, status: 'AA (eco)' },
-            { name: 'Высокогорский ГОК', industry: 'metallurgy', region: 'ural', score: 72, status: 'A- (eco)' },
-            { name: 'ТМК', industry: 'metallurgy', region: 'ural', score: 70, status: 'BBB+ (eco)' },
-            { name: 'ЧЭМК', industry: 'metallurgy', region: 'ural', score: 68, status: 'BBB (eco)' },
-            { name: 'Западно-Сибирский металлург', industry: 'metallurgy', region: 'siberia', score: 65, status: 'BBB (eco)' },
-            { name: 'Новолипецкий металлург', industry: 'metallurgy', region: 'central', score: 74, status: 'A (eco)' },
-            // ЭНЕРГЕТИКА (15)
-            { name: 'Интер РАО', industry: 'energy', region: 'central', score: 90, status: 'AAA (eco)' },
-            { name: 'Татнефть', industry: 'energy', region: 'volga', score: 87, status: 'AA+ (eco)' },
-            { name: 'Газпром', industry: 'energy', region: 'central', score: 86, status: 'AA+ (eco)' },
-            { name: 'Роснефть', industry: 'energy', region: 'central', score: 84, status: 'AA (eco)' },
-            { name: 'ЛУКОЙЛ', industry: 'energy', region: 'central', score: 82, status: 'A+ (eco)' },
-            { name: 'Сургутнефтегаз', industry: 'energy', region: 'siberia', score: 78, status: 'A (eco)' },
-            { name: 'Газпром нефть', industry: 'energy', region: 'siberia', score: 85, status: 'AA (eco)' },
-            { name: 'РусГидро', industry: 'energy', region: 'siberia', score: 80, status: 'A+ (eco)' },
-            { name: 'Россети', industry: 'energy', region: 'central', score: 76, status: 'A (eco)' },
-            { name: 'Эн+', industry: 'energy', region: 'siberia', score: 83, status: 'AA (eco)' },
-            { name: 'Славнефть', industry: 'energy', region: 'ural', score: 70, status: 'A- (eco)' },
-            { name: 'Иркутскэнерго', industry: 'energy', region: 'siberia', score: 72, status: 'A- (eco)' },
-            { name: 'Кузбассразрезуголь', industry: 'energy', region: 'siberia', score: 65, status: 'BBB (eco)' },
-            { name: 'СДС-Уголь', industry: 'energy', region: 'siberia', score: 62, status: 'BBB- (eco)' },
-            { name: 'ЕвроСибЭнерго', industry: 'energy', region: 'siberia', score: 68, status: 'BBB+ (eco)' },
-            // СТРОИТЕЛЬСТВО (15)
-            { name: 'ГК ПИК', industry: 'construction', region: 'central', score: 82, status: 'A+ (eco)' },
-            { name: 'Эталон', industry: 'construction', region: 'central', score: 78, status: 'A (eco)' },
-            { name: 'Самолёт', industry: 'construction', region: 'central', score: 76, status: 'A (eco)' },
-            { name: 'ЛСР', industry: 'construction', region: 'northwest', score: 74, status: 'A- (eco)' },
-            { name: 'А101', industry: 'construction', region: 'central', score: 72, status: 'A- (eco)' },
-            { name: 'Донстрой', industry: 'construction', region: 'central', score: 70, status: 'BBB+ (eco)' },
-            { name: 'Крост', industry: 'construction', region: 'central', score: 68, status: 'BBB (eco)' },
-            { name: 'ФСК Лидер', industry: 'construction', region: 'central', score: 65, status: 'BBB (eco)' },
-            { name: 'ГК Гранель', industry: 'construction', region: 'central', score: 63, status: 'BBB- (eco)' },
-            { name: 'РГ-Девелопмент', industry: 'construction', region: 'central', score: 60, status: 'BBB- (eco)' },
-            { name: 'Брусника', industry: 'construction', region: 'ural', score: 75, status: 'A (eco)' },
-            { name: 'Синара-Девелопмент', industry: 'construction', region: 'ural', score: 71, status: 'A- (eco)' },
-            { name: 'Атомстройкомплекс', industry: 'construction', region: 'ural', score: 69, status: 'BBB+ (eco)' },
-            { name: 'ГК Проспект', industry: 'construction', region: 'ural', score: 64, status: 'BBB (eco)' },
-            { name: 'ГК СтройТрест', industry: 'construction', region: 'northwest', score: 67, status: 'BBB (eco)' },
-            // ХИМИЧЕСКАЯ (15)
-            { name: 'ФосАгро', industry: 'chemical', region: 'central', score: 94, status: 'AAA (eco)' },
-            { name: 'СИБУР', industry: 'chemical', region: 'central', score: 89, status: 'AA+ (eco)' },
-            { name: 'Акрон', industry: 'chemical', region: 'volga', score: 80, status: 'A+ (eco)' },
-            { name: 'Уралхим', industry: 'chemical', region: 'ural', score: 77, status: 'A (eco)' },
-            { name: 'ЕвроХим', industry: 'chemical', region: 'central', score: 82, status: 'A+ (eco)' },
-            { name: 'Нижнекамскнефтехим', industry: 'chemical', region: 'volga', score: 75, status: 'A (eco)' },
-            { name: 'Казаньоргсинтез', industry: 'chemical', region: 'volga', score: 73, status: 'A- (eco)' },
-            { name: 'Салаватнефтеоргсинтез', industry: 'chemical', region: 'volga', score: 70, status: 'A- (eco)' },
-            { name: 'Тольяттиазот', industry: 'chemical', region: 'volga', score: 68, status: 'BBB+ (eco)' },
-            { name: 'Уфанефтехим', industry: 'chemical', region: 'volga', score: 65, status: 'BBB (eco)' },
-            { name: 'Минеральные удобрения', industry: 'chemical', region: 'northwest', score: 72, status: 'A- (eco)' },
-            { name: 'Щёкиноазот', industry: 'chemical', region: 'central', score: 67, status: 'BBB (eco)' },
-            { name: 'Полимир (Нафтан)', industry: 'chemical', region: 'volga', score: 63, status: 'BBB- (eco)' },
-            { name: 'Апатит', industry: 'chemical', region: 'northwest', score: 78, status: 'A (eco)' },
-            { name: 'Березникиазот', industry: 'chemical', region: 'ural', score: 60, status: 'BBB- (eco)' },
-            // IT И ТЕЛЕКОМ (15)
-            { name: 'МТС', industry: 'it', region: 'central', score: 80, status: 'A+ (eco)' },
-            { name: 'Ростелеком', industry: 'it', region: 'central', score: 84, status: 'AA (eco)' },
-            { name: 'МегавФон', industry: 'it', region: 'central', score: 78, status: 'A (eco)' },
-            { name: 'Билайн', industry: 'it', region: 'central', score: 76, status: 'A (eco)' },
-            { name: 'Tele2', industry: 'it', region: 'central', score: 74, status: 'A- (eco)' },
-            { name: 'Yandex', industry: 'it', region: 'central', score: 82, status: 'A+ (eco)' },
-            { name: 'Kaspersky', industry: 'it', region: 'central', score: 70, status: 'A- (eco)' },
-            { name: 'Astra Linux', industry: 'it', region: 'central', score: 68, status: 'BBB+ (eco)' },
-            { name: 'Positive Technologies', industry: 'it', region: 'central', score: 72, status: 'A- (eco)' },
-            { name: 'СберТех', industry: 'it', region: 'central', score: 86, status: 'AA+ (eco)' },
-            { name: 'VK', industry: 'it', region: 'central', score: 75, status: 'A (eco)' },
-            { name: 'Цифра', industry: 'it', region: 'ural', score: 65, status: 'BBB (eco)' },
-            { name: 'Элемент', industry: 'it', region: 'ural', score: 62, status: 'BBB- (eco)' },
-            { name: 'К2 Технопаркт', industry: 'it', region: 'ural', score: 60, status: 'BBB- (eco)' },
-            { name: 'ИнфоТеКС', industry: 'it', region: 'central', score: 67, status: 'BBB (eco)' },
+            { name: 'Северсталь', industry: 'metallurgy', region: 'central', score: 92, status: 'AAA (eco)', desc: 'Лидер металлургии. Инвестировала 97 млрд руб. в модернизацию. Снизила выбросы CO2 на 2 млн т/год.', link: 'https://www.severstal.com' },
+            { name: 'Норникель', industry: 'metallurgy', region: 'siberia', score: 88, status: 'AA+ (eco)', desc: 'Реализует "Серную программу 2.0" (180 млрд руб). Снижение SO2 на 45%. Внедрила ИИ-систему AXIOMA.', link: 'https://www.nornickel.com' },
+            { name: 'РУСАЛ', industry: 'metallurgy', region: 'siberia', score: 85, status: 'AA (eco)', desc: 'Крупнейший производитель алюминия. Снизила выбросы фтористого водорода в 3 раза благодаря новым технологиям.', link: 'https://rusal.ru' },
+            { name: 'ЧТПЗ', industry: 'metallurgy', region: 'ural', score: 84, status: 'AA (eco)', desc: 'Программа "Зелёный трубопровод". Замкнутое водоснабжение, экономия 2.3 млн м3 воды в год. 94% утилизация отходов.', link: 'https://www.chtpz.com' },
+            { name: 'ЧМК', industry: 'metallurgy', region: 'ural', score: 82, status: 'A+ (eco)', desc: 'Программа "Чистый воздух". Реконструкция аглофабрики. Снижение PM2.5 в санитарной зоне на 32%.', link: 'https://www.mmk.ru' },
+            { name: 'Мечел', industry: 'metallurgy', region: 'ural', score: 78, status: 'A (eco)', desc: 'Акцент на модернизацию коксохимического производства. Внедрение систем замкнутого водооборота.', link: '#' },
+            { name: 'НЛМК', industry: 'metallurgy', region: 'central', score: 90, status: 'AA+ (eco)', desc: 'Лидер по уровню диверсификации и экологической прозрачности. Высокий уровень переработки отходов.', link: '#' },
+            { name: 'ММК', industry: 'metallurgy', region: 'ural', score: 80, status: 'A+ (eco)', desc: 'Программа "Экологический ММК". Рекультивация земель, снижение негативного воздействия.', link: '#' },
+            { name: 'АЛРОСА', industry: 'metallurgy', region: 'siberia', score: 75, status: 'A (eco)', desc: 'Фокус на рекультивацию нарушенных земель и сохранение биоразнообразия в Якутии.', link: '#' },
+            { name: 'Полюс', industry: 'metallurgy', region: 'siberia', score: 83, status: 'AA (eco)', desc: 'Снижение углеродного следа за счет ГЭС. Программа по сохранению водных ресурсов.', link: '#' },
+            { name: 'Интер РАО', industry: 'energy', region: 'central', score: 90, status: 'AAA (eco)', desc: 'Модернизация ТЭС для повышения КПД. Активное развитие ВИЭ (солнечная генерация).', link: '#' },
+            { name: 'Татнефть', industry: 'energy', region: 'volga', score: 87, status: 'AA+ (eco)', desc: 'Проект "Зелёная нефть". Лидерство в лесовосстановлении и утилизации попутного нефтяного газа.', link: '#' },
+            { name: 'Газпром', industry: 'energy', region: 'central', score: 86, status: 'AA+ (eco)', desc: 'Программа по снижению сжигания ПНГ. Перевод автопарка на газомоторное топливо.', link: '#' },
+            { name: 'Роснефть', industry: 'energy', region: 'central', score: 84, status: 'AA (eco)', desc: 'Внедрение технологий улавливания углерода. Модернизация НПЗ.', link: '#' },
+            { name: 'ЛУКОЙЛ', industry: 'energy', region: 'central', score: 82, status: 'A+ (eco)', desc: 'Инновации: асфальт с резиновой крошкой. Программы энергоэффективности на заводах.', link: '#' },
+            { name: 'ГК ПИК', industry: 'construction', region: 'central', score: 82, status: 'A+ (eco)', desc: 'Строительство энергоэффективных домов. Использование вторичного сырья.', link: '#' },
+            { name: 'Эталон', industry: 'construction', region: 'central', score: 78, status: 'A (eco)', desc: 'Сертификация объектов по "зелёным" стандартам. Раздельный сбор на стройплощадках.', link: '#' },
+            { name: 'Брусника', industry: 'construction', region: 'ural', score: 75, status: 'A (eco)', desc: 'Лидер в создании комфортной городской среды с экологическим уклоном.', link: '#' },
+            { name: 'ФосАгро', industry: 'chemical', region: 'central', score: 94, status: 'AAA (eco)', desc: 'Мировой лидер по ESG в химической отрасли. Использование фосфогипса в строительстве.', link: '#' },
+            { name: 'СИБУР', industry: 'chemical', region: 'central', score: 89, status: 'AA+ (eco)', desc: 'Проект "Зелёная гранула" (переработка пластика). Снижение выбросов на новых заводах.', link: '#' },
+            { name: 'МТС', industry: 'it', region: 'central', score: 80, status: 'A+ (eco)', desc: 'Проект "Вдохновляй(ся)". Цифровизация для снижения бумажного документооборота.', link: '#' },
+            { name: 'Ростелеком', industry: 'it', region: 'central', score: 84, status: 'AA (eco)', desc: 'Развитие ЦОДов с низким PUE. Экологическое просвещение.', link: '#' },
         ];
 
+        const glossaryData = [
+            { term: 'ESG', def: 'Environmental, Social, Governance. Система оценки компании по трем направлениям: экология, социальная политика и корпоративное управление.' },
+            { term: 'Углеродный след', def: 'Суммарный объем выбросов парниковых газов, произведенных прямым и косвенным образом компанией. Измеряется в тоннах CO2-эквивалента.' },
+            { term: 'Scope 1, 2, 3', def: 'Категории выбросов по GHG Protocol. 1 - прямые (трубы), 2 - от энергии (свет), 3 - цепочка поставок (логистика).' },
+            { term: 'Верификация', def: 'Независимая проверка отчета компании аудитором на соответствие стандартам (ГОСТ, ISO).' },
+            { term: 'ТКО', def: 'Твердые коммунальные отходы. Бытовой мусор, подлежащий вывозу и утилизации.' },
+            { term: 'ГОСТ Р ИСО 14064', def: 'Российский национальный стандарт, устанавливающий требования к количественному определению и отчетности о выбросах парниковых газов.' },
+            { term: 'РАЭКС (RAEX)', def: 'Рейтинговое агентство, присваивающее ESG-рейтинги российским компаниям.' },
+            { term: 'Зелёные кредиты', def: 'Кредиты с пониженной процентной ставкой, выдаваемые банками на реализацию экологических проектов.' }
+        ];
+
+        const audienceData = {
+            industry: {
+                title: 'Для промышленных предприятий',
+                content: `
+                    <p class="mb-4"><strong>Проблема:</strong> У вас тяжелые активы, высокие выбросы (Scope 1) и давление регуляторов (Росприроднадзор).</p>
+                    <p class="mb-4"><strong>Что мы делаем:</strong></p>
+                    <ul class="list-disc pl-5 mb-4 space-y-1">
+                        <li>Считаем полный углеродный след с учетом технологических процессов.</li>
+                        <li>Помогаем внедрить НДТ (Наилучшие Доступные Технологии) для получения налоговых льгот.</li>
+                        <li>Готовим отчетность для RAEX, чтобы привлечь иностранных (дружественных) инвесторов.</li>
+                    </ul>
+                    <p><strong>Пример:</strong> Для завода в Челябинске мы помогли снизить плату за НВОС на 15% за счет оптимизации отчётности по отходам.</p>
+                `
+            },
+            construction: {
+                title: 'Для строительных компаний',
+                content: `
+                    <p class="mb-4"><strong>Проблема:</strong> Банки (например, ДОМ.РФ) требуют "зелёные" сертификаты для проектного финансирования. Покупатели хотят эко-жилье.</p>
+                    <p class="mb-4"><strong>Что мы делаем:</strong></p>
+                    <ul class="list-disc pl-5 mb-4 space-y-1">
+                        <li>Оцениваем углеродный след стройматериалов.</li>
+                        <li>Помогаем получить подтверждение соответствия критериям "зелёного" строительства.</li>
+                        <li>Упаковываем ESG-преимущества для маркетинга ЖК.</li>
+                    </ul>
+                    <p><strong>Пример:</strong> Девелопер получил ставку по проектному финансированию на 0.5% ниже благодаря нашему сертификату ESG-рисков.</p>
+                `
+            },
+            suppliers: {
+                title: 'Для поставщиков (Госзакупки)',
+                content: `
+                    <p class="mb-4"><strong>Проблема:</strong> В тендерах 44-ФЗ и 223-ФЗ появляются требования к ESG-рейтингу. Без него вы теряете баллы.</p>
+                    <p class="mb-4"><strong>Что мы делаем:</strong></p>
+                    <ul class="list-disc pl-5 mb-4 space-y-1">
+                        <li>Проводим экспресс-аудит на соответствие требованиям заказчика.</li>
+                        <li>Регистрируем вас в рейтинге ЭКГ (Экология-Кадры-Государство).</li>
+                        <li>Готовим тендерное досье с подтверждённым ESG-статусом.</li>
+                    </ul>
+                    <p><strong>Пример:</strong> Поставщик медтехники выиграл контракт на 50 млн руб., опередив конкурента за счёт 5 дополнительных баллов за эко-рейтинг.</p>
+                `
+            }
+        };
+
+        // --- BENCHMARKS LOGIC ---
         const ITEMS_PER_PAGE = 10;
         let currentPage = 1;
         let filteredData = [...benchmarks];
@@ -723,7 +823,7 @@
             const end = start + ITEMS_PER_PAGE;
             const pageData = data.slice(start, end);
             
-            pageData.forEach(row => {
+            pageData.forEach((row, index) => {
                 const tr = document.createElement('tr');
                 tr.className = 'table-row-hover transition border-b border-gray-100';
                 let scoreColor = row.score >= 85 ? 'bg-eco text-white' : row.score >= 70 ? 'bg-green-100 text-eco-dark' : 'bg-yellow-100 text-yellow-800';
@@ -733,10 +833,39 @@
                     <td class="px-6 py-4 text-gray-600">${getRegionName(row.region)}</td>
                     <td class="px-6 py-4"><span class="${scoreColor} px-2 py-1 rounded font-bold text-xs">${row.score}/100</span></td>
                     <td class="px-6 py-4 font-semibold text-eco-dark text-sm">${row.status}</td>
+                    <td class="px-6 py-4">
+                        <button onclick="showCompanyDetails(${start + index})" class="text-eco hover:text-eco-dark text-xs font-semibold underline">Подробнее</button>
+                    </td>
                 `;
                 tbody.appendChild(tr);
             });
             renderPagination(data.length);
+        }
+
+        function showCompanyDetails(index) {
+            const company = filteredData[index];
+            const content = `
+                <div class="flex items-start gap-4 mb-4">
+                    <div class="w-16 h-16 bg-eco-soft rounded-full flex items-center justify-center text-3xl flex-shrink-0">🏢</div>
+                    <div>
+                        <h4 class="text-xl font-bold text-eco-dark">${company.name}</h4>
+                        <p class="text-sm text-gray-500">${getIndustryName(company.industry)} | ${getRegionName(company.region)}</p>
+                        <div class="mt-2 inline-block bg-eco text-white text-xs px-2 py-1 rounded font-bold">${company.status} • Балл: ${company.score}</div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-lg mb-4">
+                    <h5 class="font-semibold mb-2">📝 Описание экологических инициатив:</h5>
+                    <p class="text-gray-700">${company.desc || 'Информация обновляется...'}</p>
+                </div>
+                <div class="flex justify-between items-center pt-4 border-t border-gray-200">
+                    <span class="text-sm text-gray-500">Источник данных: Открытые реестры 2025</span>
+                    ${company.link && company.link !== '#' ? `<a href="${company.link}" target="_blank" class="text-eco hover:underline text-sm font-semibold">Перейти на сайт компании ↗</a>` : '<span class="text-gray-400 text-sm">Сайт недоступен</span>'}
+                </div>
+            `;
+            document.getElementById('infoModalTitle').textContent = 'Карточка компании';
+            document.getElementById('infoModalBody').innerHTML = content;
+            document.getElementById('infoModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
         }
 
         function renderPagination(total) {
@@ -767,6 +896,31 @@
             renderTable(filteredData);
         }
 
+        // --- UI LOGIC ---
+        function toggleMobileMenu() { document.getElementById('mobileMenu').classList.toggle('hidden'); }
+
+        function toggleDetails(id) {
+            const el = document.getElementById(id);
+            el.classList.toggle('open');
+        }
+
+        function openModal(id) {
+            document.getElementById(id).classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function openAudienceModal(type) {
+            const data = audienceData[type];
+            document.getElementById('infoModalTitle').textContent = data.title;
+            document.getElementById('infoModalBody').innerHTML = data.content;
+            openModal('infoModal');
+        }
+
         // --- QUIZ MODAL LOGIC ---
         function openQuizModal(serviceName) {
             document.getElementById('quizService').value = serviceName || 'Не выбран';
@@ -775,18 +929,15 @@
             document.getElementById('contactStep').classList.add('hidden');
             document.getElementById('quizForm').reset();
             document.getElementById('quizContactForm').reset();
-            document.getElementById('quizModal').classList.add('active');
-            document.body.style.overflow = 'hidden';
+            openModal('quizModal');
         }
 
         function closeQuizModal(e) {
             if (!e || e.target === document.getElementById('quizModal')) {
-                document.getElementById('quizModal').classList.remove('active');
-                document.body.style.overflow = '';
+                closeModal('quizModal');
             }
         }
 
-        // Quiz submission → show contact form
         document.getElementById('quizForm').addEventListener('submit', function(e) {
             e.preventDefault();
             let score = 0;
@@ -810,9 +961,6 @@
             document.getElementById('contactStep').classList.remove('hidden');
         });
 
-        // --- UI LOGIC ---
-        function toggleMobileMenu() { document.getElementById('mobileMenu').classList.toggle('hidden'); }
-
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -832,7 +980,6 @@
         }, { threshold: 0.1 });
         document.querySelectorAll('.fade-in-section').forEach(el => observer.observe(el));
 
-        // --- CALCULATOR ---
         function calculateSavings() {
             const input = parseFloat(document.getElementById('calcInput').value) || 0;
             const savings = Math.floor(input * 0.011);
@@ -841,7 +988,6 @@
             resultDiv.classList.remove('hidden');
         }
 
-        // --- VALIDATION ---
         function validateName(input) {
             const regex = /^[А-Яа-яЁё\s\-]+$/;
             const isValid = regex.test(input.value) && input.value.length >= 2;
@@ -867,7 +1013,6 @@
             return isValid;
         }
 
-        // --- TELEGRAM SENDER ---
         async function sendToTelegram(data) {
             const text = ` *Новая заявка с сайта EcoStartup*\n\n👤 Имя: ${data.name}\n📞 Телефон: ${data.phone}\n🏢 Компания: ${data.company || 'Не указана'}\n📦 Пакет: ${data.service}\n Дата: ${new Date().toLocaleString('ru-RU')}`;
             const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
@@ -881,7 +1026,6 @@
             }
         }
 
-        // --- FORM HANDLERS ---
         async function handleFormSubmit(e) {
             e.preventDefault();
             const form = e.target;
@@ -898,15 +1042,44 @@
                 alert('✅ Заявка успешно отправлена! Мы свяжемся с вами в течение 2 часов.');
                 form.reset();
                 form.querySelectorAll('.input-success').forEach(el => el.classList.remove('input-success'));
-                closeQuizModal();
+                closeModal('quizModal');
             } else { alert('❌ Ошибка отправки. Проверьте соединение или напишите нам в Telegram.'); }
             btn.innerHTML = originalText; btn.disabled = false;
         }
 
-        // Main contact form
         document.getElementById('leadForm').addEventListener('submit', handleFormSubmit);
-        // Quiz contact form
         document.getElementById('quizContactForm').addEventListener('submit', handleFormSubmit);
+        
+        // Populate Glossary
+        const glossaryList = glossaryData.map(item => 
+            `<div class="mb-4 pb-4 border-b border-gray-100 last:border-0">
+                <h4 class="font-bold text-eco-dark text-lg mb-1">${item.term}</h4>
+                <p class="text-gray-600 text-sm">${item.def}</p>
+            </div>`
+        ).join('');
+        document.getElementById('glossaryModalTitle')?.remove(); // ensure clean
+        // We inject glossary content dynamically when modal opens to keep HTML clean
+        const glossaryBtn = document.querySelector('button[onclick="openModal(\'glossaryModal\')"]');
+        if(glossaryBtn) {
+            glossaryBtn.onclick = function() {
+                document.getElementById('infoModalTitle').textContent = '📖 Словарь ESG-терминов';
+                document.getElementById('infoModalBody').innerHTML = glossaryList;
+                openModal('infoModal');
+            }
+        }
+
+        // Populate Checklist Modal
+        document.querySelector('button[onclick="openModal(\'checklistModal\')"]')?.addEventListener('click', function() {
+            document.getElementById('infoModalTitle').textContent = '📥 Скачать чек-лист';
+            document.getElementById('infoModalBody').innerHTML = `
+                <p class="mb-4">Введите ваш Email, и мы отправим PDF-файл "Чек-лист подготовки к ESG-аудиту" вам на почту.</p>
+                <form onsubmit="alert('Спасибо! Чек-лист отправлен.'); closeModal('infoModal'); return false;" class="space-y-4">
+                    <input type="email" required placeholder="example@mail.ru" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-eco">
+                    <button type="submit" class="w-full btn-primary text-white py-3 rounded-xl font-semibold">Отправить чек-лист</button>
+                </form>
+            `;
+            openModal('infoModal');
+        });
 
         // Init Table
         renderTable(benchmarks);
