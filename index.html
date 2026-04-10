@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EcoStartup — Экологический рейтинг и ESG-сертификация под ключ</title>
+    <title>EcoStartup — ESG-консалтинг и сертификация под ключ</title>
     <meta name="description" content="Получите экологический сертификат RAEX/ЭКГ за 45 дней. Расчёт углеродного следа, подготовка документов, сопровождение до вручения.">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
+    <link rel="icon" href="image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script>
@@ -46,6 +46,7 @@
         .leaf-deco { position: absolute; opacity: 0.05; pointer-events: none; }
         .input-error { border-color: #DC2626 !important; background-color: #FEF2F2; }
         .input-success { border-color: #2E7D32 !important; background-color: #F0FDF4; }
+        .table-row-hover:hover { background-color: #F0FDF4; }
     </style>
 </head>
 <body class="bg-white text-gray-800 overflow-x-hidden">
@@ -61,9 +62,9 @@
             </a>
             <nav class="hidden md:flex space-x-8 items-center">
                 <a href="#services" class="text-gray-600 hover:text-eco font-medium transition">Услуги</a>
+                <a href="#benchmarks" class="text-gray-600 hover:text-eco font-medium transition">Рэнкинги</a>
+                <a href="#calculator" class="text-gray-600 hover:text-eco font-medium transition">Оценка потенциала</a>
                 <a href="#process" class="text-gray-600 hover:text-eco font-medium transition">Как работаем</a>
-                <a href="#reviews" class="text-gray-600 hover:text-eco font-medium transition">Кейсы</a>
-                <a href="#team" class="text-gray-600 hover:text-eco font-medium transition">Команда</a>
                 <a href="#contact" class="btn-primary text-white px-6 py-2.5 rounded-lg font-semibold shadow-md">
                     <span>Оставить заявку</span>
                 </a>
@@ -75,9 +76,9 @@
         <div id="mobileMenu" class="hidden md:hidden bg-white border-t shadow-lg absolute w-full">
             <div class="px-4 py-4 space-y-3">
                 <a href="#services" class="block text-gray-700 font-medium py-2" onclick="toggleMobileMenu()">Услуги и цены</a>
+                <a href="#benchmarks" class="block text-gray-700 font-medium py-2" onclick="toggleMobileMenu()">Рэнкинги</a>
+                <a href="#calculator" class="block text-gray-700 font-medium py-2" onclick="toggleMobileMenu()">Оценка потенциала</a>
                 <a href="#process" class="block text-gray-700 font-medium py-2" onclick="toggleMobileMenu()">Как работаем</a>
-                <a href="#reviews" class="block text-gray-700 font-medium py-2" onclick="toggleMobileMenu()">Кейсы</a>
-                <a href="#team" class="block text-gray-700 font-medium py-2" onclick="toggleMobileMenu()">Команда</a>
                 <a href="#contact" class="block btn-primary text-white px-4 py-3 rounded-lg font-semibold text-center" onclick="toggleMobileMenu()">Оставить заявку</a>
             </div>
         </div>
@@ -91,7 +92,7 @@
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 <div class="fade-in-section">
                     <div class="inline-block bg-white/20 backdrop-blur px-4 py-1.5 rounded-full text-sm mb-6 border border-white/30">
-                        ✅ Работаем с 2024 года • 98% успешных верификаций
+                        ✅ Работаем по ГОСТ Р ИСО 14064 • 98% успешных верификаций
                     </div>
                     <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
                         Получите экологический сертификат <span class="text-green-200">RAEX/ЭКГ</span> за 45 дней
@@ -122,7 +123,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- Interactive Calculator -->
+                <!-- Interactive Savings Calculator -->
                 <div class="hidden md:block fade-in-section">
                     <div class="relative">
                         <div class="absolute inset-0 gradient-bg rounded-2xl transform rotate-3 opacity-40 blur-xl"></div>
@@ -236,6 +237,189 @@
         </div>
     </section>
 
+    <!-- Benchmarks & Rankings Section -->
+    <section id="benchmarks" class="py-20 bg-eco-bg">
+        <div class="container mx-auto px-4 fade-in-section">
+            <div class="text-center mb-12">
+                <div class="inline-block bg-eco text-white px-4 py-1.5 rounded-full text-sm mb-4">📊 Рэнкинги и бенчмарки</div>
+                <h2 class="text-3xl font-bold text-eco-dark mb-3">Сравните себя с конкурентами</h2>
+                <p class="text-gray-600 max-w-3xl mx-auto">
+                    Зачем смотреть на таблицу? <strong>Узнайте проходной балл для победы в тендерах, сравните показатели с лидерами отрасли и поймите, какой рейтинг нужен вашему бизнесу для льготных кредитов.</strong> Данные основаны на открытых реестрах 2025 г.
+                </p>
+            </div>
+            
+            <!-- Filters -->
+            <div class="flex flex-wrap gap-4 justify-center mb-8">
+                <select id="filterIndustry" class="px-4 py-2 border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-eco focus:border-transparent">
+                    <option value="all">Все отрасли</option>
+                    <option value="metallurgy">Металлургия</option>
+                    <option value="energy">Энергетика</option>
+                    <option value="construction">Строительство</option>
+                    <option value="chemical">Химическая</option>
+                </select>
+                <select id="filterRegion" class="px-4 py-2 border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-eco focus:border-transparent">
+                    <option value="all">Все регионы</option>
+                    <option value="ural">Урал</option>
+                    <option value="central">Центр</option>
+                    <option value="siberia">Сибирь</option>
+                </select>
+                <button onclick="filterTable()" class="btn-primary text-white px-6 py-2 rounded-lg font-semibold">Применить фильтр</button>
+            </div>
+
+            <!-- Table -->
+            <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-200">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead class="bg-gray-50 text-gray-600 text-sm uppercase">
+                            <tr>
+                                <th class="px-6 py-4 font-semibold">Компания</th>
+                                <th class="px-6 py-4 font-semibold">Отрасль</th>
+                                <th class="px-6 py-4 font-semibold">Регион</th>
+                                <th class="px-6 py-4 font-semibold">ESG-балл</th>
+                                <th class="px-6 py-4 font-semibold">Статус</th>
+                            </tr>
+                        </thead>
+                        <tbody id="benchTableBody" class="divide-y divide-gray-100 text-sm">
+                            <!-- Rows injected by JS -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="p-4 bg-gray-50 text-center text-xs text-gray-500 border-t">
+                    * Данные носят ознакомительный характер. Для точной оценки позиции вашей компании оставьте заявку на бесплатный экспресс-аудит.
+                </div>
+            </div>
+            
+            <div class="text-center mt-8">
+                <button onclick="openModal('Хочу рейтинг выше')" class="btn-primary text-white px-8 py-3 rounded-xl font-semibold shadow-lg">
+                    <span>🚀 Хочу такой же или выше</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ESG Potential Calculator (Quiz) -->
+    <section id="calculator" class="py-20 bg-white">
+        <div class="container mx-auto px-4 fade-in-section">
+            <div class="text-center mb-12">
+                <div class="inline-block bg-eco text-white px-4 py-1.5 rounded-full text-sm mb-4"> Оценка потенциала</div>
+                <h2 class="text-3xl font-bold text-eco-dark mb-3">ESG-Потенциал вашей компании</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Ответьте на 5 вопросов по стандартам консалтинговых агентств. Мы рассчитаем ваш текущий балл и порекомендуем оптимальный путь к сертификации.</p>
+            </div>
+            
+            <div class="max-w-3xl mx-auto bg-eco-soft p-8 rounded-2xl shadow-sm border border-eco/20">
+                <form id="quizForm" class="space-y-6">
+                    <!-- Q1 -->
+                    <div>
+                        <label class="block font-semibold text-gray-800 mb-2">1. Какой у вас масштаб и отрасль?</label>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <label class="flex items-center p-3 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-eco transition">
+                                <input type="radio" name="q1" value="10" class="mr-3 text-eco focus:ring-eco" required>
+                                <span class="text-sm">Малый бизнес / Услуги (<50 чел.)</span>
+                            </label>
+                            <label class="flex items-center p-3 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-eco transition">
+                                <input type="radio" name="q1" value="20" class="mr-3 text-eco focus:ring-eco">
+                                <span class="text-sm">Средний бизнес / Производство (50-250 чел.)</span>
+                            </label>
+                            <label class="flex items-center p-3 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-eco transition">
+                                <input type="radio" name="q1" value="30" class="mr-3 text-eco focus:ring-eco">
+                                <span class="text-sm">Крупное предприятие / Завод (250+ чел.)</span>
+                            </label>
+                        </div>
+                    </div>
+                    <!-- Q2 -->
+                    <div>
+                        <label class="block font-semibold text-gray-800 mb-2">2. Какие документы уже есть на руках?</label>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <label class="flex items-center p-3 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-eco transition">
+                                <input type="radio" name="q2" value="5" class="mr-3 text-eco focus:ring-eco" required>
+                                <span class="text-sm">Только базовая отчётность</span>
+                            </label>
+                            <label class="flex items-center p-3 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-eco transition">
+                                <input type="radio" name="q2" value="15" class="mr-3 text-eco focus:ring-eco">
+                                <span class="text-sm">Есть расчёт выбросов (Scope 1-2)</span>
+                            </label>
+                            <label class="flex items-center p-3 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-eco transition">
+                                <input type="radio" name="q2" value="25" class="mr-3 text-eco focus:ring-eco">
+                                <span class="text-sm">Полный пакет + верификация</span>
+                            </label>
+                        </div>
+                    </div>
+                    <!-- Q3 -->
+                    <div>
+                        <label class="block font-semibold text-gray-800 mb-2">3. Главная цель получения рейтинга?</label>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <label class="flex items-center p-3 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-eco transition">
+                                <input type="radio" name="q3" value="10" class="mr-3 text-eco focus:ring-eco" required>
+                                <span class="text-sm">Победа в госзакупках / тендерах</span>
+                            </label>
+                            <label class="flex items-center p-3 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-eco transition">
+                                <input type="radio" name="q3" value="20" class="mr-3 text-eco focus:ring-eco">
+                                <span class="text-sm">Получение «зелёного» кредита</span>
+                            </label>
+                            <label class="flex items-center p-3 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-eco transition">
+                                <input type="radio" name="q3" value="15" class="mr-3 text-eco focus:ring-eco">
+                                <span class="text-sm">Репутация и привлечение инвестиций</span>
+                            </label>
+                        </div>
+                    </div>
+                    <!-- Q4 -->
+                    <div>
+                        <label class="block font-semibold text-gray-800 mb-2">4. Желаемый срок получения сертификата?</label>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <label class="flex items-center p-3 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-eco transition">
+                                <input type="radio" name="q4" value="10" class="mr-3 text-eco focus:ring-eco" required>
+                                <span class="text-sm">Срочно (до 30 дней)</span>
+                            </label>
+                            <label class="flex items-center p-3 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-eco transition">
+                                <input type="radio" name="q4" value="20" class="mr-3 text-eco focus:ring-eco">
+                                <span class="text-sm">Стандартно (45-60 дней)</span>
+                            </label>
+                            <label class="flex items-center p-3 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-eco transition">
+                                <input type="radio" name="q4" value="15" class="mr-3 text-eco focus:ring-eco">
+                                <span class="text-sm">Планово (3-6 месяцев)</span>
+                            </label>
+                        </div>
+                    </div>
+                    <!-- Q5 -->
+                    <div>
+                        <label class="block font-semibold text-gray-800 mb-2">5. Какой прирост эффективности ожидаете?</label>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <label class="flex items-center p-3 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-eco transition">
+                                <input type="radio" name="q5" value="10" class="mr-3 text-eco focus:ring-eco" required>
+                                <span class="text-sm">Снижение операционных затрат на 5-10%</span>
+                            </label>
+                            <label class="flex items-center p-3 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-eco transition">
+                                <input type="radio" name="q5" value="20" class="mr-3 text-eco focus:ring-eco">
+                                <span class="text-sm">Доступ к новым рынкам / тендерам</span>
+                            </label>
+                            <label class="flex items-center p-3 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-eco transition">
+                                <input type="radio" name="q5" value="15" class="mr-3 text-eco focus:ring-eco">
+                                <span class="text-sm">Комплексная трансформация бизнеса</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="w-full btn-primary text-white py-4 rounded-xl font-semibold shadow-xl text-lg">
+                        <span>📊 Рассчитать потенциал</span>
+                    </button>
+                </form>
+
+                <!-- Result Block -->
+                <div id="quizResult" class="hidden mt-8 p-6 bg-white rounded-xl border-2 border-eco shadow-md text-center">
+                    <h3 class="text-2xl font-bold text-eco-dark mb-2">Ваш ESG-потенциал: <span id="scoreValue" class="text-3xl text-eco">0</span>/100</h3>
+                    <p class="text-gray-600 mb-4" id="scoreDesc">Описание результата</p>
+                    <div class="bg-eco-soft p-4 rounded-lg mb-4">
+                        <p class="font-semibold text-eco-dark">Рекомендуемый пакет:</p>
+                        <p class="text-xl font-bold text-eco" id="recommendedPackage">Пакет Бизнес</p>
+                    </div>
+                    <button onclick="openModal('Заявка по результатам теста')" class="btn-primary text-white px-8 py-3 rounded-xl font-semibold shadow-md">
+                        <span>📩 Получить детальный план</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Process -->
     <section id="process" class="py-20 bg-eco-bg">
         <div class="container mx-auto px-4 fade-in-section">
@@ -307,66 +491,7 @@
         </div>
     </section>
 
-    <!-- Reviews / Cases -->
-    <section id="reviews" class="py-20 bg-eco-bg">
-        <div class="container mx-auto px-4 fade-in-section">
-            <div class="text-center mb-16">
-                <div class="inline-block bg-eco text-white px-4 py-1.5 rounded-full text-sm mb-4">📊 Пилотные проекты</div>
-                <h2 class="text-3xl font-bold text-eco-dark mb-3">Аналитика и результаты</h2>
-                <p class="text-gray-600">Мы применяем алгоритмы лидеров рынка к задачам среднего бизнеса.</p>
-            </div>
-            <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-                <div class="bg-white p-8 rounded-2xl shadow-sm card-hover border border-eco/20">
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center text-2xl">🏭</div>
-                        <div>
-                            <h3 class="font-bold">Металлургический завод Урала</h3>
-                            <p class="text-xs text-gray-500">Промышленность • 450 сотрудников</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-600 text-sm mb-4">«Провели экспресс-аудит углеродного следа. Выявили скрытые потери энергии на 18%. После внедрения рекомендаций компания подала заявку на ЭКГ-рейтинг и выиграла тендер на 120 млн ₽.»</p>
-                    <div class="flex text-yellow-400 text-sm">⭐⭐⭐⭐⭐</div>
-                </div>
-                <div class="bg-white p-8 rounded-2xl shadow-sm card-hover border border-eco/20">
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center text-2xl">🖨️</div>
-                        <div>
-                            <h3 class="font-bold">Типография «ПринтМастер»</h3>
-                            <p class="text-xs text-gray-500">Малый бизнес • 25 сотрудников</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-600 text-sm mb-4">«Внедрили раздельный сбор и электронный документооборот. Снизили операционные расходы на 12% за 3 месяца. Готовимся к получению сертификата для выхода на федеральные закупки.»</p>
-                    <div class="flex text-yellow-400 text-sm">⭐⭐⭐⭐⭐</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Team -->
-    <section id="team" class="py-20 bg-white">
-        <div class="container mx-auto px-4 fade-in-section">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold text-eco-dark mb-3">Наша команда</h2>
-                <p class="text-gray-600">Эксперты в экологическом менеджменте и digital-решениях.</p>
-            </div>
-            <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                <div class="bg-eco-soft p-8 rounded-2xl text-center card-hover border border-eco/20">
-                    <div class="w-24 h-24 bg-white rounded-full mx-auto mb-4 flex items-center justify-center text-4xl shadow-md">👨‍💼</div>
-                    <h3 class="text-xl font-bold text-eco-dark">Трущенко Н.</h3>
-                    <p class="text-eco font-medium mb-3">Руководитель проектов</p>
-                    <p class="text-sm text-gray-600">Эксперт по экологическому аудиту и стандартам RAEX/ЭКГ. Разрабатывает стратегии декарбонизации для промышленных предприятий.</p>
-                </div>
-                <div class="bg-eco-soft p-8 rounded-2xl text-center card-hover border border-eco/20">
-                    <div class="w-24 h-24 bg-white rounded-full mx-auto mb-4 flex items-center justify-center text-4xl shadow-md">👨‍</div>
-                    <h3 class="text-xl font-bold text-eco-dark">Чистяков И.</h3>
-                    <p class="text-eco font-medium mb-3">Технический директор</p>
-                    <p class="text-sm text-gray-600">Full-stack разработчик. Создаёт цифровые платформы для расчёта углеродного следа и автоматизации отчётности.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact & Form -->
+    <!-- Contact & Footer -->
     <section id="contact" class="py-20 gradient-bg text-white relative overflow-hidden">
         <div class="leaf-deco top-10 right-10 w-40 h-40 bg-white rounded-full"></div>
         <div class="container mx-auto px-4 relative z-10">
@@ -389,7 +514,7 @@
                         </div>
                     </div>
                     <div class="flex space-x-4">
-                        <a href="https://t.me/+79000916748" target="_blank" class="bg-white/20 hover:bg-white/30 px-6 py-3 rounded-lg font-semibold transition backdrop-blur">Написать в Telegram</a>
+                        <a href="https://t.me/Pokssip" target="_blank" class="bg-white/20 hover:bg-white/30 px-6 py-3 rounded-lg font-semibold transition backdrop-blur">Написать в Telegram</a>
                         <a href="https://wa.me/79000916748" target="_blank" class="bg-white/20 hover:bg-white/30 px-6 py-3 rounded-lg font-semibold transition backdrop-blur">Написать в WhatsApp</a>
                     </div>
                 </div>
@@ -433,12 +558,13 @@
     <footer class="bg-gray-900 text-gray-300 py-12">
         <div class="container mx-auto px-4">
             <div class="grid md:grid-cols-4 gap-8 mb-8">
-                <div>
+                <div class="md:col-span-2">
                     <div class="flex items-center space-x-2 mb-4">
                         <span class="text-2xl">🌿</span>
                         <span class="text-xl font-bold text-white">EcoStartup</span>
                     </div>
-                    <p class="text-sm opacity-75">Консалтинговое агентство по экологической сертификации и ESG-трансформации бизнеса в РФ.</p>
+                    <p class="text-sm opacity-75 mb-4 max-w-md">Консалтинговое агентство по экологической сертификации и ESG-трансформации бизнеса в РФ. Помогаем компаниям получать рейтинги RAEX/ЭКГ, выходить в тендеры и снижать стоимость капитала.</p>
+                    <p class="text-sm font-semibold text-white">Есть вопросы или готовы начать? Напишите нам в Telegram или оставьте заявку на сайте.</p>
                 </div>
                 <div>
                     <h4 class="text-white font-semibold mb-4">Услуги</h4>
@@ -446,14 +572,7 @@
                         <li><a href="#services" class="hover:text-white transition">Экспресс-аудит</a></li>
                         <li><a href="#services" class="hover:text-white transition">Сертификация под ключ</a></li>
                         <li><a href="#services" class="hover:text-white transition">Тендерная упаковка</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-white font-semibold mb-4">Компания</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="#process" class="hover:text-white transition">Как мы работаем</a></li>
-                        <li><a href="#team" class="hover:text-white transition">Команда</a></li>
-                        <li><a href="#reviews" class="hover:text-white transition">Кейсы</a></li>
+                        <li><a href="#benchmarks" class="hover:text-white transition">Бенчмарки отрасли</a></li>
                     </ul>
                 </div>
                 <div>
@@ -461,6 +580,7 @@
                     <ul class="space-y-2 text-sm">
                         <li>📞 +7 (900) 091-67-48</li>
                         <li>📧 pokssi99p@gmail.com</li>
+                        <li>💬 Telegram: @Pokssip</li>
                         <li>📍 Челябинская область, РФ</li>
                     </ul>
                 </div>
@@ -507,9 +627,89 @@
     <script>
         // --- CONFIGURATION ---
         const BOT_TOKEN = '8630586750:AAFXE0Tu5wJMJjo8LokysmEf0K6gmlBpO9U';
-        // ⚠️ ВАЖНО: Telegram требует ЧИСЛОВОЙ ID. Вставь сюда число из getUpdates (например: 123456789)
+        // ⚠️ ВАЖНО: Вставь сюда числовой CHAT_ID из @userinfobot или getUpdates
         const CHAT_ID = '8630586750'; 
         
+        // --- BENCHMARK DATA ---
+        const benchmarks = [
+            { name: 'ЧТПЗ', industry: 'metallurgy', region: 'ural', score: 88, status: 'A+ (eco)' },
+            { name: 'Северсталь', industry: 'metallurgy', region: 'central', score: 92, status: 'AAA (eco)' },
+            { name: 'РУСАЛ', industry: 'metallurgy', region: 'siberia', score: 85, status: 'AA (eco)' },
+            { name: 'Интер РАО', industry: 'energy', region: 'central', score: 90, status: 'AAA (eco)' },
+            { name: 'Татнефть', industry: 'energy', region: 'ural', score: 87, status: 'AA+ (eco)' },
+            { name: 'ГК ПИК', industry: 'construction', region: 'central', score: 82, status: 'A (eco)' },
+            { name: 'Эталон', industry: 'construction', region: 'central', score: 78, status: 'A- (eco)' },
+            { name: 'ФосАгро', industry: 'chemical', region: 'ural', score: 94, status: 'AAA (eco)' },
+            { name: 'СИБУР', industry: 'chemical', region: 'ural', score: 89, status: 'AA+ (eco)' },
+            { name: 'ЧМК', industry: 'metallurgy', region: 'ural', score: 84, status: 'AA (eco)' },
+        ];
+
+        function renderTable(data) {
+            const tbody = document.getElementById('benchTableBody');
+            tbody.innerHTML = '';
+            data.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.className = 'table-row-hover transition border-b border-gray-100';
+                tr.innerHTML = `
+                    <td class="px-6 py-4 font-medium text-gray-900">${row.name}</td>
+                    <td class="px-6 py-4 text-gray-600">${getIndustryName(row.industry)}</td>
+                    <td class="px-6 py-4 text-gray-600">${getRegionName(row.region)}</td>
+                    <td class="px-6 py-4"><span class="bg-eco/10 text-eco px-2 py-1 rounded font-bold">${row.score}/100</span></td>
+                    <td class="px-6 py-4 font-semibold text-eco-dark">${row.status}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function getIndustryName(key) {
+            const map = { metallurgy: 'Металлургия', energy: 'Энергетика', construction: 'Строительство', chemical: 'Химическая' };
+            return map[key] || key;
+        }
+        function getRegionName(key) {
+            const map = { ural: 'Урал', central: 'Центр', siberia: 'Сибирь' };
+            return map[key] || key;
+        }
+
+        function filterTable() {
+            const ind = document.getElementById('filterIndustry').value;
+            const reg = document.getElementById('filterRegion').value;
+            const filtered = benchmarks.filter(b => (ind === 'all' || b.industry === ind) && (reg === 'all' || b.region === reg));
+            renderTable(filtered);
+        }
+
+        // --- QUIZ LOGIC ---
+        document.getElementById('quizForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            let score = 0;
+            const formData = new FormData(this);
+            for (let pair of formData.entries()) {
+                score += parseInt(pair[1]);
+            }
+            
+            // Normalize to 100 max (max possible is 115, but we cap at 100 for display)
+            const finalScore = Math.min(100, Math.round((score / 115) * 100));
+            
+            let desc = '';
+            let pkg = '';
+            
+            if(finalScore < 40) {
+                desc = 'Низкий уровень подготовки. Требуется базовый аудит и сбор документации.';
+                pkg = 'Пакет Старт (89 000 ₽)';
+            } else if(finalScore < 70) {
+                desc = 'Средний уровень. Есть база, но нужна верификация и упаковка для тендеров.';
+                pkg = 'Пакет Бизнес (245 000 ₽)';
+            } else {
+                desc = 'Высокий потенциал. Готовы к срочной подаче и приоритетному сопровождению.';
+                pkg = 'Пакет Тендер (490 000 ₽)';
+            }
+
+            document.getElementById('scoreValue').textContent = finalScore;
+            document.getElementById('scoreDesc').textContent = desc;
+            document.getElementById('recommendedPackage').textContent = pkg;
+            document.getElementById('quizResult').classList.remove('hidden');
+            document.getElementById('quizResult').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+
         // --- UI LOGIC ---
         function toggleMobileMenu() { document.getElementById('mobileMenu').classList.toggle('hidden'); }
         const modal = document.getElementById('modal');
@@ -542,7 +742,7 @@
         // --- CALCULATOR ---
         function calculateSavings() {
             const input = parseFloat(document.getElementById('calcInput').value) || 0;
-            const savings = Math.floor(input * 0.011); // 1.1% difference
+            const savings = Math.floor(input * 0.011);
             const resultDiv = document.getElementById('calcResult');
             document.getElementById('calcValue').textContent = savings.toLocaleString('ru-RU') + ' ₽/год';
             resultDiv.classList.remove('hidden');
@@ -631,6 +831,9 @@
 
         document.getElementById('leadForm').addEventListener('submit', handleFormSubmit);
         document.getElementById('modalForm').addEventListener('submit', handleFormSubmit);
+
+        // Init Table
+        renderTable(benchmarks);
     </script>
 </body>
 </html>
