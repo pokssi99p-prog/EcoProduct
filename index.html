@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EcoStartup — ESG-консалтинг и сертификация под ключ</title>
-    <meta name="description" content="Получите экологический сертификат RAEX/ЭКГ за 45 дней. Расчёт углеродного следа, подготовка документов, сопровождение до вручения.">
+    <meta name="description" content="Получите экологический сертификат RAEX/ЭКГ за 45 дней.">
     <link rel="icon" href="image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -38,7 +38,7 @@
         .btn-primary span { position: relative; z-index: 1; }
         .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 100; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
         .modal-overlay.active { opacity: 1; pointer-events: auto; }
-        .modal-content { background: white; border-radius: 16px; padding: 2rem; width: 90%; max-width: 500px; transform: scale(0.95); transition: transform 0.3s ease; max-height: 90vh; overflow-y: auto; }
+        .modal-content { background: white; border-radius: 16px; padding: 2rem; width: 95%; max-width: 600px; transform: scale(0.95); transition: transform 0.3s ease; max-height: 90vh; overflow-y: auto; }
         .modal-overlay.active .modal-content { transform: scale(1); }
         .fade-in-section { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
         .fade-in-section.visible { opacity: 1; transform: translateY(0); }
@@ -47,6 +47,7 @@
         .input-error { border-color: #DC2626 !important; background-color: #FEF2F2; }
         .input-success { border-color: #2E7D32 !important; background-color: #F0FDF4; }
         .table-row-hover:hover { background-color: #F0FDF4; }
+        .pagination-btn.active { background-color: #2E7D32; color: white; }
     </style>
 </head>
 <body class="bg-white text-gray-800 overflow-x-hidden">
@@ -63,7 +64,6 @@
             <nav class="hidden md:flex space-x-8 items-center">
                 <a href="#services" class="text-gray-600 hover:text-eco font-medium transition">Услуги</a>
                 <a href="#benchmarks" class="text-gray-600 hover:text-eco font-medium transition">Рэнкинги</a>
-                <a href="#calculator" class="text-gray-600 hover:text-eco font-medium transition">Оценка потенциала</a>
                 <a href="#process" class="text-gray-600 hover:text-eco font-medium transition">Как работаем</a>
                 <a href="#contact" class="btn-primary text-white px-6 py-2.5 rounded-lg font-semibold shadow-md">
                     <span>Оставить заявку</span>
@@ -77,7 +77,6 @@
             <div class="px-4 py-4 space-y-3">
                 <a href="#services" class="block text-gray-700 font-medium py-2" onclick="toggleMobileMenu()">Услуги и цены</a>
                 <a href="#benchmarks" class="block text-gray-700 font-medium py-2" onclick="toggleMobileMenu()">Рэнкинги</a>
-                <a href="#calculator" class="block text-gray-700 font-medium py-2" onclick="toggleMobileMenu()">Оценка потенциала</a>
                 <a href="#process" class="block text-gray-700 font-medium py-2" onclick="toggleMobileMenu()">Как работаем</a>
                 <a href="#contact" class="block btn-primary text-white px-4 py-3 rounded-lg font-semibold text-center" onclick="toggleMobileMenu()">Оставить заявку</a>
             </div>
@@ -101,7 +100,7 @@
                         Мы берём на себя расчёты, документы и верификацию. Вы получаете рейтинг, доступ к льготным кредитам и преимущество в госзакупках. Без бюрократии и скрытых платежей.
                     </p>
                     <div class="flex flex-col sm:flex-row gap-4">
-                        <button onclick="openModal('Получить расчёт')" class="btn-primary text-white px-8 py-4 rounded-xl font-semibold text-center shadow-xl text-lg">
+                        <button onclick="openQuizModal()" class="btn-primary text-white px-8 py-4 rounded-xl font-semibold text-center shadow-xl text-lg">
                             <span>🚀 Рассчитать стоимость</span>
                         </button>
                         <a href="#services" class="border-2 border-white/50 px-8 py-4 rounded-xl font-semibold hover:bg-white/10 transition text-center backdrop-blur">
@@ -202,7 +201,7 @@
                         <li class="flex items-start"><span class="text-eco mr-2">✓</span> Дорожная карта на 12 месяцев</li>
                         <li class="flex items-start"><span class="text-eco mr-2">✓</span> Срок: 14 дней</li>
                     </ul>
-                    <button onclick="openModal('Пакет Старт')" class="w-full border-2 border-eco text-eco font-semibold py-3 rounded-xl hover:bg-eco hover:text-white transition">Заказать аудит</button>
+                    <button onclick="openQuizModal('Пакет Старт')" class="w-full border-2 border-eco text-eco font-semibold py-3 rounded-xl hover:bg-eco hover:text-white transition">Заказать аудит</button>
                 </div>
                 <!-- Business -->
                 <div class="bg-eco-soft border-2 border-eco rounded-2xl p-8 card-hover flex flex-col relative transform md:-translate-y-4 shadow-xl">
@@ -217,7 +216,7 @@
                         <li class="flex items-start"><span class="text-eco mr-2">✓</span> Верификация и сертификат</li>
                         <li class="flex items-start"><span class="text-eco mr-2">✓</span> Срок: 45–60 дней</li>
                     </ul>
-                    <button onclick="openModal('Пакет Бизнес')" class="w-full btn-primary text-white font-semibold py-3 rounded-xl shadow-md">Оформить заявку</button>
+                    <button onclick="openQuizModal('Пакет Бизнес')" class="w-full btn-primary text-white font-semibold py-3 rounded-xl shadow-md">Оформить заявку</button>
                 </div>
                 <!-- Tender -->
                 <div class="bg-white border border-gray-200 rounded-2xl p-8 card-hover flex flex-col">
@@ -231,7 +230,7 @@
                         <li class="flex items-start"><span class="text-eco mr-2">✓</span> Приоритетная поддержка куратора</li>
                         <li class="flex items-start"><span class="text-eco mr-2">✓</span> Пост-сопровождение 6 мес.</li>
                     </ul>
-                    <button onclick="openModal('Пакет Тендер')" class="w-full border-2 border-eco text-eco font-semibold py-3 rounded-xl hover:bg-eco hover:text-white transition">Связаться с менеджером</button>
+                    <button onclick="openQuizModal('Пакет Тендер')" class="w-full border-2 border-eco text-eco font-semibold py-3 rounded-xl hover:bg-eco hover:text-white transition">Связаться с менеджером</button>
                 </div>
             </div>
         </div>
@@ -244,7 +243,7 @@
                 <div class="inline-block bg-eco text-white px-4 py-1.5 rounded-full text-sm mb-4">📊 Рэнкинги и бенчмарки</div>
                 <h2 class="text-3xl font-bold text-eco-dark mb-3">Сравните себя с конкурентами</h2>
                 <p class="text-gray-600 max-w-3xl mx-auto">
-                    Зачем смотреть на таблицу? <strong>Узнайте проходной балл для победы в тендерах, сравните показатели с лидерами отрасли и поймите, какой рейтинг нужен вашему бизнесу для льготных кредитов.</strong> Данные основаны на открытых реестрах 2025 г.
+                    Узнайте проходной балл для победы в тендерах, сравните показатели с лидерами отрасли и поймите, какой рейтинг нужен вашему бизнесу для льготных кредитов. Данные основаны на открытых реестрах 2025 г.
                 </p>
             </div>
             
@@ -256,12 +255,15 @@
                     <option value="energy">Энергетика</option>
                     <option value="construction">Строительство</option>
                     <option value="chemical">Химическая</option>
+                    <option value="it">IT и телеком</option>
                 </select>
                 <select id="filterRegion" class="px-4 py-2 border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-eco focus:border-transparent">
                     <option value="all">Все регионы</option>
                     <option value="ural">Урал</option>
                     <option value="central">Центр</option>
                     <option value="siberia">Сибирь</option>
+                    <option value="volga">Поволжье</option>
+                    <option value="northwest">Северо-Запад</option>
                 </select>
                 <button onclick="filterTable()" class="btn-primary text-white px-6 py-2 rounded-lg font-semibold">Применить фильтр</button>
             </div>
@@ -284,144 +286,23 @@
                         </tbody>
                     </table>
                 </div>
+                <!-- Pagination -->
+                <div class="flex justify-center items-center gap-2 p-4 bg-gray-50 border-t" id="pagination"></div>
                 <div class="p-4 bg-gray-50 text-center text-xs text-gray-500 border-t">
                     * Данные носят ознакомительный характер. Для точной оценки позиции вашей компании оставьте заявку на бесплатный экспресс-аудит.
                 </div>
             </div>
             
             <div class="text-center mt-8">
-                <button onclick="openModal('Хочу рейтинг выше')" class="btn-primary text-white px-8 py-3 rounded-xl font-semibold shadow-lg">
+                <button onclick="openQuizModal('Хочу рейтинг выше')" class="btn-primary text-white px-8 py-3 rounded-xl font-semibold shadow-lg">
                     <span>🚀 Хочу такой же или выше</span>
                 </button>
             </div>
         </div>
     </section>
 
-    <!-- ESG Potential Calculator (Quiz) -->
-    <section id="calculator" class="py-20 bg-white">
-        <div class="container mx-auto px-4 fade-in-section">
-            <div class="text-center mb-12">
-                <div class="inline-block bg-eco text-white px-4 py-1.5 rounded-full text-sm mb-4"> Оценка потенциала</div>
-                <h2 class="text-3xl font-bold text-eco-dark mb-3">ESG-Потенциал вашей компании</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">Ответьте на 5 вопросов по стандартам консалтинговых агентств. Мы рассчитаем ваш текущий балл и порекомендуем оптимальный путь к сертификации.</p>
-            </div>
-            
-            <div class="max-w-3xl mx-auto bg-eco-soft p-8 rounded-2xl shadow-sm border border-eco/20">
-                <form id="quizForm" class="space-y-6">
-                    <!-- Q1 -->
-                    <div>
-                        <label class="block font-semibold text-gray-800 mb-2">1. Какой у вас масштаб и отрасль?</label>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                            <label class="flex items-center p-3 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-eco transition">
-                                <input type="radio" name="q1" value="10" class="mr-3 text-eco focus:ring-eco" required>
-                                <span class="text-sm">Малый бизнес / Услуги (<50 чел.)</span>
-                            </label>
-                            <label class="flex items-center p-3 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-eco transition">
-                                <input type="radio" name="q1" value="20" class="mr-3 text-eco focus:ring-eco">
-                                <span class="text-sm">Средний бизнес / Производство (50-250 чел.)</span>
-                            </label>
-                            <label class="flex items-center p-3 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-eco transition">
-                                <input type="radio" name="q1" value="30" class="mr-3 text-eco focus:ring-eco">
-                                <span class="text-sm">Крупное предприятие / Завод (250+ чел.)</span>
-                            </label>
-                        </div>
-                    </div>
-                    <!-- Q2 -->
-                    <div>
-                        <label class="block font-semibold text-gray-800 mb-2">2. Какие документы уже есть на руках?</label>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                            <label class="flex items-center p-3 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-eco transition">
-                                <input type="radio" name="q2" value="5" class="mr-3 text-eco focus:ring-eco" required>
-                                <span class="text-sm">Только базовая отчётность</span>
-                            </label>
-                            <label class="flex items-center p-3 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-eco transition">
-                                <input type="radio" name="q2" value="15" class="mr-3 text-eco focus:ring-eco">
-                                <span class="text-sm">Есть расчёт выбросов (Scope 1-2)</span>
-                            </label>
-                            <label class="flex items-center p-3 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-eco transition">
-                                <input type="radio" name="q2" value="25" class="mr-3 text-eco focus:ring-eco">
-                                <span class="text-sm">Полный пакет + верификация</span>
-                            </label>
-                        </div>
-                    </div>
-                    <!-- Q3 -->
-                    <div>
-                        <label class="block font-semibold text-gray-800 mb-2">3. Главная цель получения рейтинга?</label>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                            <label class="flex items-center p-3 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-eco transition">
-                                <input type="radio" name="q3" value="10" class="mr-3 text-eco focus:ring-eco" required>
-                                <span class="text-sm">Победа в госзакупках / тендерах</span>
-                            </label>
-                            <label class="flex items-center p-3 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-eco transition">
-                                <input type="radio" name="q3" value="20" class="mr-3 text-eco focus:ring-eco">
-                                <span class="text-sm">Получение «зелёного» кредита</span>
-                            </label>
-                            <label class="flex items-center p-3 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-eco transition">
-                                <input type="radio" name="q3" value="15" class="mr-3 text-eco focus:ring-eco">
-                                <span class="text-sm">Репутация и привлечение инвестиций</span>
-                            </label>
-                        </div>
-                    </div>
-                    <!-- Q4 -->
-                    <div>
-                        <label class="block font-semibold text-gray-800 mb-2">4. Желаемый срок получения сертификата?</label>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                            <label class="flex items-center p-3 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-eco transition">
-                                <input type="radio" name="q4" value="10" class="mr-3 text-eco focus:ring-eco" required>
-                                <span class="text-sm">Срочно (до 30 дней)</span>
-                            </label>
-                            <label class="flex items-center p-3 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-eco transition">
-                                <input type="radio" name="q4" value="20" class="mr-3 text-eco focus:ring-eco">
-                                <span class="text-sm">Стандартно (45-60 дней)</span>
-                            </label>
-                            <label class="flex items-center p-3 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-eco transition">
-                                <input type="radio" name="q4" value="15" class="mr-3 text-eco focus:ring-eco">
-                                <span class="text-sm">Планово (3-6 месяцев)</span>
-                            </label>
-                        </div>
-                    </div>
-                    <!-- Q5 -->
-                    <div>
-                        <label class="block font-semibold text-gray-800 mb-2">5. Какой прирост эффективности ожидаете?</label>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                            <label class="flex items-center p-3 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-eco transition">
-                                <input type="radio" name="q5" value="10" class="mr-3 text-eco focus:ring-eco" required>
-                                <span class="text-sm">Снижение операционных затрат на 5-10%</span>
-                            </label>
-                            <label class="flex items-center p-3 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-eco transition">
-                                <input type="radio" name="q5" value="20" class="mr-3 text-eco focus:ring-eco">
-                                <span class="text-sm">Доступ к новым рынкам / тендерам</span>
-                            </label>
-                            <label class="flex items-center p-3 bg-white rounded-lg border border-gray-200 cursor-pointer hover:border-eco transition">
-                                <input type="radio" name="q5" value="15" class="mr-3 text-eco focus:ring-eco">
-                                <span class="text-sm">Комплексная трансформация бизнеса</span>
-                            </label>
-                        </div>
-                    </div>
-                    
-                    <button type="submit" class="w-full btn-primary text-white py-4 rounded-xl font-semibold shadow-xl text-lg">
-                        <span>📊 Рассчитать потенциал</span>
-                    </button>
-                </form>
-
-                <!-- Result Block -->
-                <div id="quizResult" class="hidden mt-8 p-6 bg-white rounded-xl border-2 border-eco shadow-md text-center">
-                    <h3 class="text-2xl font-bold text-eco-dark mb-2">Ваш ESG-потенциал: <span id="scoreValue" class="text-3xl text-eco">0</span>/100</h3>
-                    <p class="text-gray-600 mb-4" id="scoreDesc">Описание результата</p>
-                    <div class="bg-eco-soft p-4 rounded-lg mb-4">
-                        <p class="font-semibold text-eco-dark">Рекомендуемый пакет:</p>
-                        <p class="text-xl font-bold text-eco" id="recommendedPackage">Пакет Бизнес</p>
-                    </div>
-                    <button onclick="openModal('Заявка по результатам теста')" class="btn-primary text-white px-8 py-3 rounded-xl font-semibold shadow-md">
-                        <span>📩 Получить детальный план</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Process -->
-    <section id="process" class="py-20 bg-eco-bg">
+    <section id="process" class="py-20 bg-white">
         <div class="container mx-auto px-4 fade-in-section">
             <div class="text-center mb-16">
                 <h2 class="text-3xl font-bold text-eco-dark mb-3">Как мы работаем</h2>
@@ -462,26 +343,26 @@
     </section>
 
     <!-- Audience -->
-    <section id="audience" class="py-20 bg-white">
+    <section class="py-20 bg-eco-bg">
         <div class="container mx-auto px-4 fade-in-section">
             <div class="text-center mb-16">
                 <h2 class="text-3xl font-bold text-eco-dark mb-3">Кому это нужно?</h2>
                 <p class="text-gray-600">Мы работаем с компаниями, у которых есть бюджет на развитие и потребность в конкурентных преимуществах.</p>
             </div>
             <div class="grid md:grid-cols-3 gap-6">
-                <div class="bg-eco-soft p-8 rounded-2xl border border-eco/20 card-hover">
+                <div class="bg-white p-8 rounded-2xl border border-eco/20 card-hover shadow-sm">
                     <div class="text-4xl mb-4">🏭</div>
                     <h3 class="font-bold text-xl mb-3">Промышленные предприятия</h3>
                     <p class="text-gray-600 text-sm mb-4">Металлургия, машиностроение, химия. Доступ к «зелёным» кредитам, экспортным контрактам и снижению регуляторных рисков.</p>
                     <div class="text-eco font-semibold text-sm">Средний чек: 245 000 – 490 000 ₽</div>
                 </div>
-                <div class="bg-eco-soft p-8 rounded-2xl border border-eco/20 card-hover">
+                <div class="bg-white p-8 rounded-2xl border border-eco/20 card-hover shadow-sm">
                     <div class="text-4xl mb-4">🏗️</div>
                     <h3 class="font-bold text-xl mb-3">Строительство и девелопмент</h3>
                     <p class="text-gray-600 text-sm mb-4">Соответствие зелёным стандартам, победа в премиум-тендерах, повышение инвестиционной привлекательности проектов.</p>
                     <div class="text-eco font-semibold text-sm">Средний чек: 245 000 – 490 000 ₽</div>
                 </div>
-                <div class="bg-eco-soft p-8 rounded-2xl border border-eco/20 card-hover">
+                <div class="bg-white p-8 rounded-2xl border border-eco/20 card-hover shadow-sm">
                     <div class="text-4xl mb-4">📦</div>
                     <h3 class="font-bold text-xl mb-3">Поставщики для госзакупок</h3>
                     <p class="text-gray-600 text-sm mb-4">Обязательный ЭКГ-балл для участия в крупных контрактах. Увеличение шансов на победу в тендерах на 30-40%.</p>
@@ -519,17 +400,17 @@
                     </div>
                 </div>
                 <div class="bg-white text-gray-800 p-8 rounded-2xl shadow-2xl">
-                    <h3 class="text-2xl font-bold mb-6 text-eco-dark">Оставить заявку</h3>
+                    <h3 class="text-2xl font-bold mb-6 text-eco-dark">Получить расчёт за 15 минут</h3>
                     <form id="leadForm" class="space-y-4" novalidate>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Ваше имя (кириллица)</label>
                             <input type="text" name="name" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-eco focus:border-transparent transition" placeholder="Иван Иванов" oninput="validateName(this)">
-                            <p class="text-xs text-error mt-1 hidden" id="nameError">Только русские буквы, пробелы и дефисы</p>
+                            <p class="text-xs text-error mt-1 hidden">Только русские буквы, пробелы и дефисы</p>
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Телефон (только цифры)</label>
                             <input type="tel" name="phone" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-eco focus:border-transparent transition" placeholder="+7 (999) 123-45-67" oninput="validatePhone(this)">
-                            <p class="text-xs text-error mt-1 hidden" id="phoneError">Введите корректный номер телефона</p>
+                            <p class="text-xs text-error mt-1 hidden">Введите корректный номер телефона</p>
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Название компании</label>
@@ -544,7 +425,7 @@
                                 <option>Пакет Тендер (490 000 ₽)</option>
                             </select>
                         </div>
-                        <button type="submit" class="w-full btn-primary text-white py-4 rounded-xl font-semibold shadow-xl text-lg disabled:opacity-50 disabled:cursor-not-allowed">
+                        <button type="submit" class="w-full btn-primary text-white py-4 rounded-xl font-semibold shadow-xl text-lg">
                             <span>🚀 Получить расчёт за 15 минут</span>
                         </button>
                         <p class="text-center text-xs text-gray-500">Нажимая кнопку, вы соглашаетесь с обработкой персональных данных</p>
@@ -592,136 +473,346 @@
         </div>
     </footer>
 
-    <!-- Modal -->
-    <div id="modal" class="modal-overlay" onclick="closeModal(event)">
+    <!-- Quiz Modal (Quiz first, then contact form) -->
+    <div id="quizModal" class="modal-overlay" onclick="closeQuizModal(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <div class="flex justify-between items-center mb-6">
-                <h3 class="text-2xl font-bold text-eco-dark" id="modalTitle">Оформить заявку</h3>
-                <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600 transition">
+                <h3 class="text-2xl font-bold text-eco-dark">Рассчитать стоимость</h3>
+                <button onclick="closeQuizModal()" class="text-gray-400 hover:text-gray-600 transition">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
-            <form id="modalForm" class="space-y-4" novalidate>
-                <input type="hidden" name="service" id="modalService">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Ваше имя (кириллица)</label>
-                    <input type="text" name="name" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-eco focus:border-transparent transition" placeholder="Иван Иванов" oninput="validateName(this)">
-                    <p class="text-xs text-error mt-1 hidden">Только русские буквы</p>
+            
+            <!-- Quiz Step -->
+            <div id="quizStep">
+                <p class="text-gray-600 mb-6 text-sm">Ответьте на 5 вопросов, чтобы мы рассчитали оптимальный пакет и стоимость для вашей компании.</p>
+                <form id="quizForm" class="space-y-5">
+                    <input type="hidden" name="service" id="quizService">
+                    <!-- Q1 -->
+                    <div>
+                        <label class="block font-semibold text-gray-800 mb-2 text-sm">1. Какой у вас масштаб и отрасль?</label>
+                        <div class="grid grid-cols-1 gap-2">
+                            <label class="flex items-center p-3 bg-gray-50 rounded-lg border border-gray-200 cursor-pointer hover:border-eco transition">
+                                <input type="radio" name="q1" value="10" class="mr-3 text-eco focus:ring-eco" required>
+                                <span class="text-sm">Малый бизнес / Услуги (&lt;50 чел.)</span>
+                            </label>
+                            <label class="flex items-center p-3 bg-gray-50 rounded-lg border border-gray-200 cursor-pointer hover:border-eco transition">
+                                <input type="radio" name="q1" value="20" class="mr-3 text-eco focus:ring-eco">
+                                <span class="text-sm">Средний бизнес / Производство (50-250 чел.)</span>
+                            </label>
+                            <label class="flex items-center p-3 bg-gray-50 rounded-lg border border-gray-200 cursor-pointer hover:border-eco transition">
+                                <input type="radio" name="q1" value="30" class="mr-3 text-eco focus:ring-eco">
+                                <span class="text-sm">Крупное предприятие / Завод (250+ чел.)</span>
+                            </label>
+                        </div>
+                    </div>
+                    <!-- Q2 -->
+                    <div>
+                        <label class="block font-semibold text-gray-800 mb-2 text-sm">2. Какие документы уже есть на руках?</label>
+                        <div class="grid grid-cols-1 gap-2">
+                            <label class="flex items-center p-3 bg-gray-50 rounded-lg border border-gray-200 cursor-pointer hover:border-eco transition">
+                                <input type="radio" name="q2" value="5" class="mr-3 text-eco focus:ring-eco" required>
+                                <span class="text-sm">Только базовая отчётность</span>
+                            </label>
+                            <label class="flex items-center p-3 bg-gray-50 rounded-lg border border-gray-200 cursor-pointer hover:border-eco transition">
+                                <input type="radio" name="q2" value="15" class="mr-3 text-eco focus:ring-eco">
+                                <span class="text-sm">Есть расчёт выбросов (Scope 1-2)</span>
+                            </label>
+                            <label class="flex items-center p-3 bg-gray-50 rounded-lg border border-gray-200 cursor-pointer hover:border-eco transition">
+                                <input type="radio" name="q2" value="25" class="mr-3 text-eco focus:ring-eco">
+                                <span class="text-sm">Полный пакет + верификация</span>
+                            </label>
+                        </div>
+                    </div>
+                    <!-- Q3 -->
+                    <div>
+                        <label class="block font-semibold text-gray-800 mb-2 text-sm">3. Главная цель получения рейтинга?</label>
+                        <div class="grid grid-cols-1 gap-2">
+                            <label class="flex items-center p-3 bg-gray-50 rounded-lg border border-gray-200 cursor-pointer hover:border-eco transition">
+                                <input type="radio" name="q3" value="10" class="mr-3 text-eco focus:ring-eco" required>
+                                <span class="text-sm">Победа в госзакупках / тендерах</span>
+                            </label>
+                            <label class="flex items-center p-3 bg-gray-50 rounded-lg border border-gray-200 cursor-pointer hover:border-eco transition">
+                                <input type="radio" name="q3" value="20" class="mr-3 text-eco focus:ring-eco">
+                                <span class="text-sm">Получение «зелёного» кредита</span>
+                            </label>
+                            <label class="flex items-center p-3 bg-gray-50 rounded-lg border border-gray-200 cursor-pointer hover:border-eco transition">
+                                <input type="radio" name="q3" value="15" class="mr-3 text-eco focus:ring-eco">
+                                <span class="text-sm">Репутация и привлечение инвестиций</span>
+                            </label>
+                        </div>
+                    </div>
+                    <!-- Q4 -->
+                    <div>
+                        <label class="block font-semibold text-gray-800 mb-2 text-sm">4. Желаемый срок получения сертификата?</label>
+                        <div class="grid grid-cols-1 gap-2">
+                            <label class="flex items-center p-3 bg-gray-50 rounded-lg border border-gray-200 cursor-pointer hover:border-eco transition">
+                                <input type="radio" name="q4" value="10" class="mr-3 text-eco focus:ring-eco" required>
+                                <span class="text-sm">Срочно (до 30 дней)</span>
+                            </label>
+                            <label class="flex items-center p-3 bg-gray-50 rounded-lg border border-gray-200 cursor-pointer hover:border-eco transition">
+                                <input type="radio" name="q4" value="20" class="mr-3 text-eco focus:ring-eco">
+                                <span class="text-sm">Стандартно (45-60 дней)</span>
+                            </label>
+                            <label class="flex items-center p-3 bg-gray-50 rounded-lg border border-gray-200 cursor-pointer hover:border-eco transition">
+                                <input type="radio" name="q4" value="15" class="mr-3 text-eco focus:ring-eco">
+                                <span class="text-sm">Планово (3-6 месяцев)</span>
+                            </label>
+                        </div>
+                    </div>
+                    <!-- Q5 -->
+                    <div>
+                        <label class="block font-semibold text-gray-800 mb-2 text-sm">5. Какой прирост эффективности ожидаете?</label>
+                        <div class="grid grid-cols-1 gap-2">
+                            <label class="flex items-center p-3 bg-gray-50 rounded-lg border border-gray-200 cursor-pointer hover:border-eco transition">
+                                <input type="radio" name="q5" value="10" class="mr-3 text-eco focus:ring-eco" required>
+                                <span class="text-sm">Снижение операционных затрат на 5-10%</span>
+                            </label>
+                            <label class="flex items-center p-3 bg-gray-50 rounded-lg border border-gray-200 cursor-pointer hover:border-eco transition">
+                                <input type="radio" name="q5" value="20" class="mr-3 text-eco focus:ring-eco">
+                                <span class="text-sm">Доступ к новым рынкам / тендерам</span>
+                            </label>
+                            <label class="flex items-center p-3 bg-gray-50 rounded-lg border border-gray-200 cursor-pointer hover:border-eco transition">
+                                <input type="radio" name="q5" value="15" class="mr-3 text-eco focus:ring-eco">
+                                <span class="text-sm">Комплексная трансформация бизнеса</span>
+                            </label>
+                        </div>
+                    </div>
+                    <button type="submit" class="w-full btn-primary text-white py-4 rounded-xl font-semibold shadow-xl">
+                        <span>📊 Далее: заполнить контакты</span>
+                    </button>
+                </form>
+            </div>
+            
+            <!-- Contact Form Step (hidden initially) -->
+            <div id="contactStep" class="hidden">
+                <div class="bg-eco-soft p-4 rounded-xl mb-6 text-center">
+                    <p class="text-eco-dark font-semibold">Ваш ESG-потенциал: <span id="quizScoreDisplay" class="text-2xl font-bold text-eco">0</span>/100</p>
+                    <p class="text-sm text-gray-600 mt-1" id="quizRecDisplay">Рекомендуемый пакет: —</p>
                 </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Телефон (только цифры)</label>
-                    <input type="tel" name="phone" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-eco focus:border-transparent transition" placeholder="+7 (999) 123-45-67" oninput="validatePhone(this)">
-                    <p class="text-xs text-error mt-1 hidden">Введите корректный номер</p>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Компания</label>
-                    <input type="text" name="company" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-eco focus:border-transparent transition" placeholder="ООО «Пример»" oninput="validateCompany(this)">
-                </div>
-                <button type="submit" class="w-full btn-primary text-white py-4 rounded-xl font-semibold shadow-xl disabled:opacity-50 disabled:cursor-not-allowed">
-                    <span>Отправить заявку</span>
-                </button>
-            </form>
+                <form id="quizContactForm" class="space-y-4" novalidate>
+                    <input type="hidden" name="service" id="quizContactService">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Ваше имя (кириллица)</label>
+                        <input type="text" name="name" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-eco focus:border-transparent transition" placeholder="Иван Иванов" oninput="validateName(this)">
+                        <p class="text-xs text-error mt-1 hidden">Только русские буквы</p>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Телефон (только цифры)</label>
+                        <input type="tel" name="phone" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-eco focus:border-transparent transition" placeholder="+7 (999) 123-45-67" oninput="validatePhone(this)">
+                        <p class="text-xs text-error mt-1 hidden">Введите корректный номер</p>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Компания</label>
+                        <input type="text" name="company" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-eco focus:border-transparent transition" placeholder="ООО «Пример»" oninput="validateCompany(this)">
+                    </div>
+                    <button type="submit" class="w-full btn-primary text-white py-4 rounded-xl font-semibold shadow-xl">
+                        <span>🚀 Отправить заявку</span>
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
 
     <script>
         // --- CONFIGURATION ---
         const BOT_TOKEN = '8630586750:AAFXE0Tu5wJMJjo8LokysmEf0K6gmlBpO9U';
-        // ⚠️ ВАЖНО: Вставь сюда числовой CHAT_ID из @userinfobot или getUpdates
-        const CHAT_ID = '8630586750'; 
+        const CHAT_ID = 'ВАШ_ЧИСЛОВОЙ_CHAT_ID'; 
         
-        // --- BENCHMARK DATA ---
+        // --- BENCHMARK DATA (50+ companies) ---
         const benchmarks = [
-            { name: 'ЧТПЗ', industry: 'metallurgy', region: 'ural', score: 88, status: 'A+ (eco)' },
+            // МЕТАЛЛУРГИЯ (15)
             { name: 'Северсталь', industry: 'metallurgy', region: 'central', score: 92, status: 'AAA (eco)' },
+            { name: 'Норникель', industry: 'metallurgy', region: 'siberia', score: 88, status: 'AA+ (eco)' },
             { name: 'РУСАЛ', industry: 'metallurgy', region: 'siberia', score: 85, status: 'AA (eco)' },
+            { name: 'ЧТПЗ', industry: 'metallurgy', region: 'ural', score: 84, status: 'AA (eco)' },
+            { name: 'ЧМК', industry: 'metallurgy', region: 'ural', score: 82, status: 'A+ (eco)' },
+            { name: 'Мечел', industry: 'metallurgy', region: 'ural', score: 78, status: 'A (eco)' },
+            { name: 'НЛМК', industry: 'metallurgy', region: 'central', score: 90, status: 'AA+ (eco)' },
+            { name: 'ММК', industry: 'metallurgy', region: 'ural', score: 80, status: 'A+ (eco)' },
+            { name: 'АЛРОСА', industry: 'metallurgy', region: 'siberia', score: 75, status: 'A (eco)' },
+            { name: 'Полюс', industry: 'metallurgy', region: 'siberia', score: 83, status: 'AA (eco)' },
+            { name: 'Высокогорский ГОК', industry: 'metallurgy', region: 'ural', score: 72, status: 'A- (eco)' },
+            { name: 'ТМК', industry: 'metallurgy', region: 'ural', score: 70, status: 'BBB+ (eco)' },
+            { name: 'ЧЭМК', industry: 'metallurgy', region: 'ural', score: 68, status: 'BBB (eco)' },
+            { name: 'Западно-Сибирский металлург', industry: 'metallurgy', region: 'siberia', score: 65, status: 'BBB (eco)' },
+            { name: 'Новолипецкий металлург', industry: 'metallurgy', region: 'central', score: 74, status: 'A (eco)' },
+            // ЭНЕРГЕТИКА (15)
             { name: 'Интер РАО', industry: 'energy', region: 'central', score: 90, status: 'AAA (eco)' },
-            { name: 'Татнефть', industry: 'energy', region: 'ural', score: 87, status: 'AA+ (eco)' },
-            { name: 'ГК ПИК', industry: 'construction', region: 'central', score: 82, status: 'A (eco)' },
-            { name: 'Эталон', industry: 'construction', region: 'central', score: 78, status: 'A- (eco)' },
-            { name: 'ФосАгро', industry: 'chemical', region: 'ural', score: 94, status: 'AAA (eco)' },
-            { name: 'СИБУР', industry: 'chemical', region: 'ural', score: 89, status: 'AA+ (eco)' },
-            { name: 'ЧМК', industry: 'metallurgy', region: 'ural', score: 84, status: 'AA (eco)' },
+            { name: 'Татнефть', industry: 'energy', region: 'volga', score: 87, status: 'AA+ (eco)' },
+            { name: 'Газпром', industry: 'energy', region: 'central', score: 86, status: 'AA+ (eco)' },
+            { name: 'Роснефть', industry: 'energy', region: 'central', score: 84, status: 'AA (eco)' },
+            { name: 'ЛУКОЙЛ', industry: 'energy', region: 'central', score: 82, status: 'A+ (eco)' },
+            { name: 'Сургутнефтегаз', industry: 'energy', region: 'siberia', score: 78, status: 'A (eco)' },
+            { name: 'Газпром нефть', industry: 'energy', region: 'siberia', score: 85, status: 'AA (eco)' },
+            { name: 'РусГидро', industry: 'energy', region: 'siberia', score: 80, status: 'A+ (eco)' },
+            { name: 'Россети', industry: 'energy', region: 'central', score: 76, status: 'A (eco)' },
+            { name: 'Эн+', industry: 'energy', region: 'siberia', score: 83, status: 'AA (eco)' },
+            { name: 'Славнефть', industry: 'energy', region: 'ural', score: 70, status: 'A- (eco)' },
+            { name: 'Иркутскэнерго', industry: 'energy', region: 'siberia', score: 72, status: 'A- (eco)' },
+            { name: 'Кузбассразрезуголь', industry: 'energy', region: 'siberia', score: 65, status: 'BBB (eco)' },
+            { name: 'СДС-Уголь', industry: 'energy', region: 'siberia', score: 62, status: 'BBB- (eco)' },
+            { name: 'ЕвроСибЭнерго', industry: 'energy', region: 'siberia', score: 68, status: 'BBB+ (eco)' },
+            // СТРОИТЕЛЬСТВО (15)
+            { name: 'ГК ПИК', industry: 'construction', region: 'central', score: 82, status: 'A+ (eco)' },
+            { name: 'Эталон', industry: 'construction', region: 'central', score: 78, status: 'A (eco)' },
+            { name: 'Самолёт', industry: 'construction', region: 'central', score: 76, status: 'A (eco)' },
+            { name: 'ЛСР', industry: 'construction', region: 'northwest', score: 74, status: 'A- (eco)' },
+            { name: 'А101', industry: 'construction', region: 'central', score: 72, status: 'A- (eco)' },
+            { name: 'Донстрой', industry: 'construction', region: 'central', score: 70, status: 'BBB+ (eco)' },
+            { name: 'Крост', industry: 'construction', region: 'central', score: 68, status: 'BBB (eco)' },
+            { name: 'ФСК Лидер', industry: 'construction', region: 'central', score: 65, status: 'BBB (eco)' },
+            { name: 'ГК Гранель', industry: 'construction', region: 'central', score: 63, status: 'BBB- (eco)' },
+            { name: 'РГ-Девелопмент', industry: 'construction', region: 'central', score: 60, status: 'BBB- (eco)' },
+            { name: 'Брусника', industry: 'construction', region: 'ural', score: 75, status: 'A (eco)' },
+            { name: 'Синара-Девелопмент', industry: 'construction', region: 'ural', score: 71, status: 'A- (eco)' },
+            { name: 'Атомстройкомплекс', industry: 'construction', region: 'ural', score: 69, status: 'BBB+ (eco)' },
+            { name: 'ГК Проспект', industry: 'construction', region: 'ural', score: 64, status: 'BBB (eco)' },
+            { name: 'ГК СтройТрест', industry: 'construction', region: 'northwest', score: 67, status: 'BBB (eco)' },
+            // ХИМИЧЕСКАЯ (15)
+            { name: 'ФосАгро', industry: 'chemical', region: 'central', score: 94, status: 'AAA (eco)' },
+            { name: 'СИБУР', industry: 'chemical', region: 'central', score: 89, status: 'AA+ (eco)' },
+            { name: 'Акрон', industry: 'chemical', region: 'volga', score: 80, status: 'A+ (eco)' },
+            { name: 'Уралхим', industry: 'chemical', region: 'ural', score: 77, status: 'A (eco)' },
+            { name: 'ЕвроХим', industry: 'chemical', region: 'central', score: 82, status: 'A+ (eco)' },
+            { name: 'Нижнекамскнефтехим', industry: 'chemical', region: 'volga', score: 75, status: 'A (eco)' },
+            { name: 'Казаньоргсинтез', industry: 'chemical', region: 'volga', score: 73, status: 'A- (eco)' },
+            { name: 'Салаватнефтеоргсинтез', industry: 'chemical', region: 'volga', score: 70, status: 'A- (eco)' },
+            { name: 'Тольяттиазот', industry: 'chemical', region: 'volga', score: 68, status: 'BBB+ (eco)' },
+            { name: 'Уфанефтехим', industry: 'chemical', region: 'volga', score: 65, status: 'BBB (eco)' },
+            { name: 'Минеральные удобрения', industry: 'chemical', region: 'northwest', score: 72, status: 'A- (eco)' },
+            { name: 'Щёкиноазот', industry: 'chemical', region: 'central', score: 67, status: 'BBB (eco)' },
+            { name: 'Полимир (Нафтан)', industry: 'chemical', region: 'volga', score: 63, status: 'BBB- (eco)' },
+            { name: 'Апатит', industry: 'chemical', region: 'northwest', score: 78, status: 'A (eco)' },
+            { name: 'Березникиазот', industry: 'chemical', region: 'ural', score: 60, status: 'BBB- (eco)' },
+            // IT И ТЕЛЕКОМ (15)
+            { name: 'МТС', industry: 'it', region: 'central', score: 80, status: 'A+ (eco)' },
+            { name: 'Ростелеком', industry: 'it', region: 'central', score: 84, status: 'AA (eco)' },
+            { name: 'МегавФон', industry: 'it', region: 'central', score: 78, status: 'A (eco)' },
+            { name: 'Билайн', industry: 'it', region: 'central', score: 76, status: 'A (eco)' },
+            { name: 'Tele2', industry: 'it', region: 'central', score: 74, status: 'A- (eco)' },
+            { name: 'Yandex', industry: 'it', region: 'central', score: 82, status: 'A+ (eco)' },
+            { name: 'Kaspersky', industry: 'it', region: 'central', score: 70, status: 'A- (eco)' },
+            { name: 'Astra Linux', industry: 'it', region: 'central', score: 68, status: 'BBB+ (eco)' },
+            { name: 'Positive Technologies', industry: 'it', region: 'central', score: 72, status: 'A- (eco)' },
+            { name: 'СберТех', industry: 'it', region: 'central', score: 86, status: 'AA+ (eco)' },
+            { name: 'VK', industry: 'it', region: 'central', score: 75, status: 'A (eco)' },
+            { name: 'Цифра', industry: 'it', region: 'ural', score: 65, status: 'BBB (eco)' },
+            { name: 'Элемент', industry: 'it', region: 'ural', score: 62, status: 'BBB- (eco)' },
+            { name: 'К2 Технопаркт', industry: 'it', region: 'ural', score: 60, status: 'BBB- (eco)' },
+            { name: 'ИнфоТеКС', industry: 'it', region: 'central', score: 67, status: 'BBB (eco)' },
         ];
+
+        const ITEMS_PER_PAGE = 10;
+        let currentPage = 1;
+        let filteredData = [...benchmarks];
+
+        function getIndustryName(key) {
+            const map = { metallurgy: 'Металлургия', energy: 'Энергетика', construction: 'Строительство', chemical: 'Химическая', it: 'IT и телеком' };
+            return map[key] || key;
+        }
+        function getRegionName(key) {
+            const map = { ural: 'Урал', central: 'Центр', siberia: 'Сибирь', volga: 'Поволжье', northwest: 'Северо-Запад' };
+            return map[key] || key;
+        }
 
         function renderTable(data) {
             const tbody = document.getElementById('benchTableBody');
             tbody.innerHTML = '';
-            data.forEach(row => {
+            const start = (currentPage - 1) * ITEMS_PER_PAGE;
+            const end = start + ITEMS_PER_PAGE;
+            const pageData = data.slice(start, end);
+            
+            pageData.forEach(row => {
                 const tr = document.createElement('tr');
                 tr.className = 'table-row-hover transition border-b border-gray-100';
+                let scoreColor = row.score >= 85 ? 'bg-eco text-white' : row.score >= 70 ? 'bg-green-100 text-eco-dark' : 'bg-yellow-100 text-yellow-800';
                 tr.innerHTML = `
                     <td class="px-6 py-4 font-medium text-gray-900">${row.name}</td>
                     <td class="px-6 py-4 text-gray-600">${getIndustryName(row.industry)}</td>
                     <td class="px-6 py-4 text-gray-600">${getRegionName(row.region)}</td>
-                    <td class="px-6 py-4"><span class="bg-eco/10 text-eco px-2 py-1 rounded font-bold">${row.score}/100</span></td>
-                    <td class="px-6 py-4 font-semibold text-eco-dark">${row.status}</td>
+                    <td class="px-6 py-4"><span class="${scoreColor} px-2 py-1 rounded font-bold text-xs">${row.score}/100</span></td>
+                    <td class="px-6 py-4 font-semibold text-eco-dark text-sm">${row.status}</td>
                 `;
                 tbody.appendChild(tr);
             });
+            renderPagination(data.length);
         }
 
-        function getIndustryName(key) {
-            const map = { metallurgy: 'Металлургия', energy: 'Энергетика', construction: 'Строительство', chemical: 'Химическая' };
-            return map[key] || key;
+        function renderPagination(total) {
+            const totalPages = Math.ceil(total / ITEMS_PER_PAGE);
+            const container = document.getElementById('pagination');
+            if (totalPages <= 1) { container.innerHTML = ''; return; }
+            let html = `<button onclick="goToPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''} class="px-3 py-1 rounded border border-gray-300 text-sm ${currentPage === 1 ? 'opacity-40 cursor-not-allowed' : 'hover:bg-eco hover:text-white transition'}">←</button>`;
+            for (let i = 1; i <= totalPages; i++) {
+                html += `<button onclick="goToPage(${i})" class="px-3 py-1 rounded border border-gray-300 text-sm pagination-btn ${i === currentPage ? 'active' : 'hover:bg-eco hover:text-white transition'}">${i}</button>`;
+            }
+            html += `<button onclick="goToPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''} class="px-3 py-1 rounded border border-gray-300 text-sm ${currentPage === totalPages ? 'opacity-40 cursor-not-allowed' : 'hover:bg-eco hover:text-white transition'}">→</button>`;
+            container.innerHTML = html;
         }
-        function getRegionName(key) {
-            const map = { ural: 'Урал', central: 'Центр', siberia: 'Сибирь' };
-            return map[key] || key;
+
+        function goToPage(page) {
+            const totalPages = Math.ceil(filteredData.length / ITEMS_PER_PAGE);
+            if (page < 1 || page > totalPages) return;
+            currentPage = page;
+            renderTable(filteredData);
+            document.getElementById('benchmarks').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
         function filterTable() {
             const ind = document.getElementById('filterIndustry').value;
             const reg = document.getElementById('filterRegion').value;
-            const filtered = benchmarks.filter(b => (ind === 'all' || b.industry === ind) && (reg === 'all' || b.region === reg));
-            renderTable(filtered);
+            filteredData = benchmarks.filter(b => (ind === 'all' || b.industry === ind) && (reg === 'all' || b.region === reg));
+            currentPage = 1;
+            renderTable(filteredData);
         }
 
-        // --- QUIZ LOGIC ---
+        // --- QUIZ MODAL LOGIC ---
+        function openQuizModal(serviceName) {
+            document.getElementById('quizService').value = serviceName || 'Не выбран';
+            document.getElementById('quizContactService').value = serviceName || 'Не выбран';
+            document.getElementById('quizStep').classList.remove('hidden');
+            document.getElementById('contactStep').classList.add('hidden');
+            document.getElementById('quizForm').reset();
+            document.getElementById('quizContactForm').reset();
+            document.getElementById('quizModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeQuizModal(e) {
+            if (!e || e.target === document.getElementById('quizModal')) {
+                document.getElementById('quizModal').classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Quiz submission → show contact form
         document.getElementById('quizForm').addEventListener('submit', function(e) {
             e.preventDefault();
             let score = 0;
             const formData = new FormData(this);
             for (let pair of formData.entries()) {
-                score += parseInt(pair[1]);
+                if (pair[0].startsWith('q')) score += parseInt(pair[1]);
             }
-            
-            // Normalize to 100 max (max possible is 115, but we cap at 100 for display)
             const finalScore = Math.min(100, Math.round((score / 115) * 100));
             
-            let desc = '';
             let pkg = '';
-            
-            if(finalScore < 40) {
-                desc = 'Низкий уровень подготовки. Требуется базовый аудит и сбор документации.';
-                pkg = 'Пакет Старт (89 000 ₽)';
-            } else if(finalScore < 70) {
-                desc = 'Средний уровень. Есть база, но нужна верификация и упаковка для тендеров.';
-                pkg = 'Пакет Бизнес (245 000 ₽)';
-            } else {
-                desc = 'Высокий потенциал. Готовы к срочной подаче и приоритетному сопровождению.';
-                pkg = 'Пакет Тендер (490 000 ₽)';
-            }
+            if (finalScore < 40) pkg = 'Пакет Старт (89 000 ₽)';
+            else if (finalScore < 70) pkg = 'Пакет Бизнес (245 000 ₽)';
+            else pkg = 'Пакет Тендер (490 000 ₽)';
 
-            document.getElementById('scoreValue').textContent = finalScore;
-            document.getElementById('scoreDesc').textContent = desc;
-            document.getElementById('recommendedPackage').textContent = pkg;
-            document.getElementById('quizResult').classList.remove('hidden');
-            document.getElementById('quizResult').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            document.getElementById('quizScoreDisplay').textContent = finalScore;
+            document.getElementById('quizRecDisplay').textContent = `Рекомендуемый пакет: ${pkg}`;
+            document.getElementById('quizService').value = pkg;
+            document.getElementById('quizContactService').value = pkg;
+
+            document.getElementById('quizStep').classList.add('hidden');
+            document.getElementById('contactStep').classList.remove('hidden');
         });
 
         // --- UI LOGIC ---
         function toggleMobileMenu() { document.getElementById('mobileMenu').classList.toggle('hidden'); }
-        const modal = document.getElementById('modal');
-        function openModal(serviceName) {
-            document.getElementById('modalTitle').textContent = serviceName ? `Заказ: ${serviceName}` : 'Оформить заявку';
-            document.getElementById('modalService').value = serviceName || 'Не выбран';
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-        function closeModal(e) {
-            if (!e || e.target === modal) { modal.classList.remove('active'); document.body.style.overflow = ''; }
-        }
+
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -729,11 +820,13 @@
                 if(target) { target.scrollIntoView({ behavior: 'smooth', block: 'start' }); document.getElementById('mobileMenu').classList.add('hidden'); }
             });
         });
+
         window.addEventListener('scroll', () => {
             const header = document.getElementById('header');
             if(window.scrollY > 50) { header.classList.add('shadow-md'); header.classList.replace('py-4', 'py-3'); }
             else { header.classList.remove('shadow-md'); header.classList.replace('py-3', 'py-4'); }
         });
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => { if(entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); } });
         }, { threshold: 0.1 });
@@ -777,16 +870,10 @@
         // --- TELEGRAM SENDER ---
         async function sendToTelegram(data) {
             const text = ` *Новая заявка с сайта EcoStartup*\n\n👤 Имя: ${data.name}\n📞 Телефон: ${data.phone}\n🏢 Компания: ${data.company || 'Не указана'}\n📦 Пакет: ${data.service}\n Дата: ${new Date().toLocaleString('ru-RU')}`;
-            
             const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
             const payload = { chat_id: CHAT_ID, text: text, parse_mode: 'Markdown' };
-
             try {
-                const response = await fetch(url, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
+                const response = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
                 return response.ok;
             } catch (error) {
                 console.error('TG Error:', error);
@@ -794,43 +881,32 @@
             }
         }
 
-        // --- FORM HANDLER ---
+        // --- FORM HANDLERS ---
         async function handleFormSubmit(e) {
             e.preventDefault();
             const form = e.target;
             const nameInput = form.querySelector('input[name="name"]');
             const phoneInput = form.querySelector('input[name="phone"]');
-            
-            if (!validateName(nameInput) || !validatePhone(phoneInput)) {
-                alert('⚠️ Пожалуйста, заполните имя и телефон корректно.');
-                return;
-            }
-
+            if (!validateName(nameInput) || !validatePhone(phoneInput)) { alert('⚠️ Пожалуйста, заполните имя и телефон корректно.'); return; }
             const btn = form.querySelector('button[type="submit"]');
             const originalText = btn.innerHTML;
-            btn.innerHTML = '<span>⏳ Отправка...</span>';
-            btn.disabled = true;
-
+            btn.innerHTML = '<span>⏳ Отправка...</span>'; btn.disabled = true;
             const formData = new FormData(form);
             const data = Object.fromEntries(formData.entries());
-
             const success = await sendToTelegram(data);
-
             if (success) {
                 alert('✅ Заявка успешно отправлена! Мы свяжемся с вами в течение 2 часов.');
                 form.reset();
                 form.querySelectorAll('.input-success').forEach(el => el.classList.remove('input-success'));
-                if(modal.classList.contains('active')) closeModal();
-            } else {
-                alert('❌ Ошибка отправки. Проверьте соединение или напишите нам в Telegram.');
-            }
-
-            btn.innerHTML = originalText;
-            btn.disabled = false;
+                closeQuizModal();
+            } else { alert('❌ Ошибка отправки. Проверьте соединение или напишите нам в Telegram.'); }
+            btn.innerHTML = originalText; btn.disabled = false;
         }
 
+        // Main contact form
         document.getElementById('leadForm').addEventListener('submit', handleFormSubmit);
-        document.getElementById('modalForm').addEventListener('submit', handleFormSubmit);
+        // Quiz contact form
+        document.getElementById('quizContactForm').addEventListener('submit', handleFormSubmit);
 
         // Init Table
         renderTable(benchmarks);
